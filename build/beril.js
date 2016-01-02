@@ -5,7 +5,7 @@ var Beril = {
 	_systemIndex: 0,
 	_entityIndex: 0,
 };
-Object.defineProperty(Beril, "version", {value: '0.0.0'});
+Object.defineProperty(Beril, "version", {value: '0.0.1'});
 
 "use strict";
 
@@ -75,7 +75,7 @@ Beril.ApplicationMode = class{
 		this.pawn = new this.config.pawn();
 		var renderSystem = _.find(this.systems, {name: 'render'});
 		if (renderSystem){
-			var camera = _.find(this.pawn.components, {type: 'camera'});
+			var camera = this.pawn.components.camera;
 			renderSystem.setCamera(camera.object);
 		}
 		this.application.pool.add(this.pawn);
@@ -454,7 +454,7 @@ Beril.TranslationSystem = class extends Beril.System{
 	}
 
 	controller(component){
-		var renderComponent = _.find(component.entity.components, {type: 'render'});
+		var renderComponent = component.entity.components.render;
 		renderComponent.mesh.position.add(component.position);
 		renderComponent.mesh.rotation.x += component.rotation.x;
 		renderComponent.mesh.rotation.y += component.rotation.y;

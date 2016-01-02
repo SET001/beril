@@ -8,7 +8,7 @@ Beril.TranslationSystem = class extends Beril.System{
 	}
 
 	controller(component){
-		var renderComponent = _.find(component.entity.components, {type: 'render'});
+		var renderComponent = component.entity.components.render;
 		renderComponent.mesh.position.add(component.position);
 		renderComponent.mesh.rotation.x += component.rotation.x;
 		renderComponent.mesh.rotation.y += component.rotation.y;
