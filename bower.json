@@ -1,0 +1,19 @@
+{
+  "name": "Beril",
+  "version": "0.0.0",
+  "authors": [
+    "SET <settydark@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "lodash": "~3.10.0",
+    "three.js": "threejs#*"
+  }
+}
