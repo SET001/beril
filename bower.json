@@ -1,0 +1,25 @@
+{
+  "name": "v3",
+  "version": "0.0.0",
+  "authors": [
+    "SET <settydark@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "lodash": "~3.10.0"
+  },
+  "dependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap": "~3.3.6",
+    "three.js": "threejs#*",
+    "requirejs": "~2.1.22"
+  }
+}

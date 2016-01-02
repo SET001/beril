@@ -1,0 +1,27 @@
+html{height: 100%}
+body{height: 100%}
+main{height: 100%}
+.container-fluid{height: 100%}
+.main{
+	height: 100%;
+	overflow: hidden;
+}
+.sidebar{
+	height: 100%;
+	overflow-y: scroll;
+}
+.sidebar .content{
+}
+.logo{
+	text-align: center;
+	margin-top: 20px;
+}
+.logo img{width: 100%;}
+
+#container{
+	height: 100%;
+}
+
+.main .content{
+	height: 100%;
+}

@@ -1,0 +1,27 @@
+<h3>Getting started</h3>
+
+<p>Beril engine use <a href="http://entity-systems.wikidot.com/">Component Entity System</a> - a pattern widely used in game development.</p>
+
+<p>Few common things to know before you can start work with Beril:</p>
+<dl class="dl-horizontal">
+  <dt>Application Mode</dt>
+  <dd><p>this is where you define what systems should be included in game, their settings and so on. You define your application mode class inherited from <code>Beril.ApplicationMode</code> and then pass it to your application either in init function:</p>
+  <p>
+   	<code>application.init({mode: MyApplicationMode})</code>
+   </p>
+   <p>or using <code>setMode</code> property of application:</p>
+   <p><code>application.setMode(MyApplicationMode)</code></p>
+ 	</dd>
+
+  <dt>Default Pawn</dt>
+  <dd>The default pawn class to be used. Think about this like a main character class or something with appached camera to it. Without any active camera you would not see any thing. Beril.DefaulPawn alriedy have a camera attached to it.</dd>
+</dl>
+<p>There are few simple steps to make you first Beril application:</p>
+
+<ol>
+	<li>Create new application instance - <code>application = new Beril.Application();</code></li>
+	<li>Init application instance with settings</li>
+	<li>run your application - <code>application.run()</code></li>
+</ol>
+
+<p>This application, however, will do nothing but a black screen.</p>

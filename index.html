@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Beril - WebGL Gaming Engine</title>
+	<link href='bower_components/bootstrap/dist/css/bootstrap.css' rel='stylesheet'/>
+	<link href='build/style.css' rel='stylesheet'/>
+</head>
+	<main ng-app="beril">
+		<aside>
+				<div class="logo">
+					<img src="images/logo.jpg" alt="">
+					<h1>Beril</h1>
+				</div>
+				<ul class="list-unstyled list-inline categories">
+					<li><a ui-sref="about">About</a></li>
+					<li><a ui-sref="tutorial">Tutorial</a></li>
+					<li><a ui-sref="docs">Docs</a></li>
+					<li><a ui-sref="examples">Examples</a></li>
+				</ul>
+				<div ui-view="menu"></div>
+		</aside>
+		<div ui-view="content" id="container"></div>
+	</main>
+<body>
+	<script data-main="src/js/main" src="bower_components/requirejs/require.js"></script>
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	<script type="text/javascript" src="src/js/app.js"></script>
+</body>
+</html>
