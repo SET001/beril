@@ -1,3 +1,5 @@
+"use strict";
+
 Beril.GameObject = class {
 	constructor(componentClasses){
 		this.components = [];

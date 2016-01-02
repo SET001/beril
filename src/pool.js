@@ -1,3 +1,5 @@
+"use strict";
+
 Beril.Pool = class {
 	constructor(){
 		this.components = {};

@@ -1,3 +1,5 @@
+"use strict";
+
 Beril.Component = class{
 	constructor(){
 		this.id = Beril._componentIndex++;

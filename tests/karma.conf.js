@@ -18,7 +18,8 @@ module.exports = function(config) {
 		'../bower_components/three.js/build/three.js',
 		'../bower_components/lodash/lodash.js',
 
-		'../build/beril.js',
+		'../src/beril.js',
+        '../src/**/*.js',
 		// 'examples/collisions/js/cube.js',
 		// 'examples/collisions/js/ground.js',
 		// 'spec/systems/*.js'

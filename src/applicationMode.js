@@ -28,10 +28,7 @@ Beril.ApplicationMode = class{
 	setPawn(){
 		this.pawn = new this.config.pawn();
 		var renderSystem = _.find(this.systems, {name: 'render'});
-		console.log(renderSystem);
-		console.log(this.pawn);
 		var camera = _.find(this.pawn.components, {type: 'camera'});
-		console.log("===>", camera);
 		renderSystem.setCamera(camera.object);
 		this.application.pool.add(this.pawn);
 	}

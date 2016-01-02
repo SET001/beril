@@ -1,3 +1,5 @@
+"use strict";
+
 Beril.System = class {
 	constructor(){
 		this.initialized = false;

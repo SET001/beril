@@ -74,10 +74,7 @@ Beril.ApplicationMode = class{
 	setPawn(){
 		this.pawn = new this.config.pawn();
 		var renderSystem = _.find(this.systems, {name: 'render'});
-		console.log(renderSystem);
-		console.log(this.pawn);
 		var camera = _.find(this.pawn.components, {type: 'camera'});
-		console.log("===>", camera);
 		renderSystem.setCamera(camera.object);
 		this.application.pool.add(this.pawn);
 	}
@@ -110,6 +107,8 @@ Beril.ApplicationMode = class{
 	}
 }
 
+"use strict";
+
 Beril.Component = class{
 	constructor(){
 		this.id = Beril._componentIndex++;
@@ -117,6 +116,8 @@ Beril.Component = class{
 		this.entity = {};
 	}
 };
+
+"use strict";
 
 Beril.GameObject = class {
 	constructor(componentClasses){
@@ -153,6 +154,8 @@ Beril.GameObject = class {
 	}
 };
 
+"use strict";
+
 Beril.PlayerCharacter = class extends Beril.GameObject{
 	constructor(){
 		super([
@@ -169,6 +172,8 @@ Beril.PlayerCharacter = class extends Beril.GameObject{
 		component.init('orthographic');
 	}
 }
+
+"use strict";
 
 Beril.Pool = class {
 	constructor(){
@@ -216,6 +221,8 @@ Beril.Pool = class {
 
 	}
 }
+
+"use strict";
 
 Beril.System = class {
 	constructor(){
@@ -422,7 +429,6 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 	}
 
 	setCamera(camera){
-		console.log("camera set!", camera);
 		this.camera = camera;
 	}
 

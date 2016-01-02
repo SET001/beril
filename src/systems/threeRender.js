@@ -36,7 +36,6 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 	}
 
 	setCamera(camera){
-		console.log("camera set!", camera);
 		this.camera = camera;
 	}
 

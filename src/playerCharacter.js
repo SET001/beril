@@ -1,3 +1,5 @@
+"use strict";
+
 Beril.PlayerCharacter = class extends Beril.GameObject{
 	constructor(){
 		super([
