@@ -34,6 +34,6 @@ Beril.System = class {
 	}
 
 	init(){
-		this.initialized = false;
+		this.initialized = true;
 	}
 };

@@ -84,6 +84,7 @@ Beril.ApplicationMode = class{
 	addSystem(system){
 		if(!_.find(this.systems, {name: system.name})){
 			system.init();
+			system.application = this.application;
 			var systemName = system.name.charAt(0).toUpperCase() + system.name.slice(1) + 'System';
 			var setUpFunction = `setUp${systemName}`;
 			if (this[setUpFunction]){
@@ -260,7 +261,7 @@ Beril.System = class {
 	}
 
 	init(){
-		this.initialized = false;
+		this.initialized = true;
 	}
 };
 
@@ -382,15 +383,16 @@ Beril.RenderSystem = class extends Beril.System{
 		this.scene = null;
 	}
 
-	run(pool){}
+	// run(pool){}
 
-	init(){}
+	// init(){}
 
 	switchScene(scene){}
 
 	switchCamera(){}
 
 	setSize(){}
+
 };
 
 "use strict";
@@ -404,10 +406,10 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 	}
 
 	init(){
-		super.init();
 		this.container.appendChild(this.renderer.domElement);
 		window.addEventListener('resize', () => this.setSize());
 		this.setSize();
+		this.initialized = true;
 	}
 
 	run(pool){

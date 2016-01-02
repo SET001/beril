@@ -10,13 +10,14 @@ Beril.RenderSystem = class extends Beril.System{
 		this.scene = null;
 	}
 
-	run(pool){}
+	// run(pool){}
 
-	init(){}
+	// init(){}
 
 	switchScene(scene){}
 
 	switchCamera(){}
 
 	setSize(){}
+
 };

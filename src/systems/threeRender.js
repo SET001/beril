@@ -9,10 +9,10 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 	}
 
 	init(){
-		super.init();
 		this.container.appendChild(this.renderer.domElement);
 		window.addEventListener('resize', () => this.setSize());
 		this.setSize();
+		this.initialized = true;
 	}
 
 	run(pool){

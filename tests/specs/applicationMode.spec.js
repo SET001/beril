@@ -14,13 +14,15 @@ var TestSystem = class extends Beril.System{
 };
 
 describe('ApplicationMode', function(){
-	var applicationMode, application, spy;
+	var applicationMode, application, spy, system;
 
 	beforeEach(function(){
 		application = new Beril.Application();
 		spy = spyOn(TestApplicationMode.prototype, 'setUpTestSystem');
-		application.init({mode: TestApplicationMode});
-		application.mode.addSystem(new TestSystem());
+		application.setMode(TestApplicationMode);
+		application.init();
+		system = new TestSystem();
+		application.mode.addSystem(system);
 	});
 
 	it('should add systems from constructor', function(){
@@ -40,5 +42,9 @@ describe('ApplicationMode', function(){
 
 	it('should run system setup function if present', function(){
 		expect(spy).toHaveBeenCalled();
-	})
+	});
+
+	it('should link systems to application', function(){
+		expect(system.application).toBeDefined();
+	});
 });
