@@ -37,7 +37,6 @@ Beril.ApplicationMode = class{
 
 	addSystem(system){
 		if(!_.find(this.systems, {name: system.name})){
-			system.init();
 			system.application = this.application;
 			var systemName = system.name.charAt(0).toUpperCase() + system.name.slice(1) + 'System';
 			var setUpFunction = `setUp${systemName}`;
@@ -48,12 +47,11 @@ Beril.ApplicationMode = class{
 			if (system.componentTypes.length){
 				system.subscribeToPool(this.application.pool, system.componentTypes);
 			}
+			system.init();
 		}
 	}
 
-	removeSystem(systemName){
-
-	}
+	removeSystem(systemName){}
 
 	run(){
 		if (!this.initialized) this.init();

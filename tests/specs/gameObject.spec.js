@@ -11,7 +11,8 @@ describe('GameObject', function(){
 	describe('constructor', function(){
 		it('Should create components on creation', function(){
 			var foo = new Beril.GameObject([Beril.Component]);
-			expect(foo.components.length).toBe(1);
+			expect(foo.components.basic).toBeDefined();
+			expect(foo.components.basic instanceof Beril.Component).toBe(true);
 		});
 
 		it('should run components setups', function(){
@@ -35,7 +36,8 @@ describe('GameObject', function(){
 		});
 
 		it('Should be able to add component', function(){
-			expect(entity.components.length).toBe(1);
+			expect(entity.components.basic).toBeDefined();
+			expect(entity.components.basic instanceof Beril.Component).toBe(true);
 		});
 
 		it('added component should have pointer to its entity', function(){

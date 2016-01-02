@@ -2,7 +2,7 @@
 
 Beril.GameObject = class {
 	constructor(componentClasses){
-		this.components = [];
+		this.components = {};
 		this.id = Beril._entityIndex++;
 		this.pool = null;
 
@@ -21,7 +21,7 @@ Beril.GameObject = class {
 
 	add(component){
 		component.entity = this;
-		this.components.push(component);
+		this.components[component.type] = component;
 		if (this.pool){
 			this.pool.addComponent(component);
 		}
