@@ -4,7 +4,7 @@ requirejs.config({
 	baseUrl: './',
 	catchError: false,
 	paths: {
-		beril: '../engine/build/beril',
+		beril: 'build/beril',
 		lodash: 'bower_components/lodash/lodash',
 		three: 'bower_components/three.js/build/three'
 	},
