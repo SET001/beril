@@ -30,8 +30,6 @@ Beril.CameraComponent = class extends Beril.Component{
 		// 		this.object = new THREE.CubeCamera(near, far, cubeResolution );
 		// 		break;
 		// }
-		this.object = new THREE.PerspectiveCamera(45, 1, 1, 1000);
-		// this.object.position.set(1, 0, 10);
-		// this.object.lookAt(0, 0, 0);
+		this.object = new THREE.PerspectiveCamera(45, 1, 1, 100000);
 	}
 };

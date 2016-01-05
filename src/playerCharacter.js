@@ -26,7 +26,9 @@ Beril.PlayerCharacter = class extends Beril.GameObject{
 	}
 
 	setUpRenderComponent(component){
-		component.mesh = new THREE.Object3D();
+		var material = new THREE.MeshBasicMaterial( {color: 0x01e4cc, side: THREE.DoubleSide} );
+		var geometry = new THREE.SphereGeometry( 10000, 32, 32 );
+		component.mesh = new THREE.Mesh(geometry, material);
 		var camera = component.entity.components.camera.object;
 		camera.mesh = component.mesh;
 		component.mesh.add(camera);

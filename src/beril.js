@@ -5,4 +5,4 @@ var Beril = {
 	_systemIndex: 0,
 	_entityIndex: 0,
 };
-Object.defineProperty(Beril, "version", {value: '0.0.2'});
+Object.defineProperty(Beril, "version", {value: '0.0.3'});

@@ -22,6 +22,14 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 		}
 	}
 
+	loadScene(path){
+		var loader = new THREE.ObjectLoader();
+		var self = this;
+    loader.load(path, (scene) => {
+			self.scene.copy(scene);
+			self.setSize();
+    });
+	}
 
 	setSize(){
 		this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
