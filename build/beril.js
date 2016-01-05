@@ -5,7 +5,7 @@ var Beril = {
 	_systemIndex: 0,
 	_entityIndex: 0,
 };
-Object.defineProperty(Beril, "version", {value: '0.0.2'});
+Object.defineProperty(Beril, "version", {value: '0.0.3'});
 
 "use strict";
 
@@ -183,7 +183,9 @@ Beril.PlayerCharacter = class extends Beril.GameObject{
 	}
 
 	setUpRenderComponent(component){
-		component.mesh = new THREE.Object3D();
+		var material = new THREE.MeshBasicMaterial( {color: 0x01e4cc, side: THREE.DoubleSide} );
+		var geometry = new THREE.SphereGeometry( 10000, 32, 32 );
+		component.mesh = new THREE.Mesh(geometry, material);
 		var camera = component.entity.components.camera.object;
 		camera.mesh = component.mesh;
 		component.mesh.add(camera);
@@ -316,9 +318,7 @@ Beril.CameraComponent = class extends Beril.Component{
 		// 		this.object = new THREE.CubeCamera(near, far, cubeResolution );
 		// 		break;
 		// }
-		this.object = new THREE.PerspectiveCamera(45, 1, 1, 1000);
-		// this.object.position.set(1, 0, 10);
-		// this.object.lookAt(0, 0, 0);
+		this.object = new THREE.PerspectiveCamera(45, 1, 1, 100000);
 	}
 };
 
@@ -628,6 +628,14 @@ Beril.ThreeRenderSystem = class extends Beril.RenderSystem{
 		}
 	}
 
+	loadScene(path){
+		var loader = new THREE.ObjectLoader();
+		var self = this;
+    loader.load(path, (scene) => {
+			self.scene.copy(scene);
+			self.setSize();
+    });
+	}
 
 	setSize(){
 		this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);

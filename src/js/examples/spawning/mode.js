@@ -13,8 +13,9 @@ define(function(require){
 
 		init(){
 			super.init();
+			var Cube = require('./cube');
 			for(var i =0; i<1000; i++){
-				this.application.pool.add(new (require('./cube'))());
+				this.application.pool.add(new Cube());
 			}
 		}
 

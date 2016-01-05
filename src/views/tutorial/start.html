@@ -24,4 +24,21 @@
 	<li>run your application - <code>application.run()</code></li>
 </ol>
 
-<p>This application, however, will do nothing but a black screen.</p>
+<p>This is a basic Beril set up that will create empty application with default application mode and default PlayerCharacter which is nothing but an empty mesh with attached camera to it.</p>
+
+<p>Now it's time to add few objects. Say we want to have a rotating cube. For this we will create a new class inherited from <code>Beril.GameObject</code>. The constructor for this class accept array of components constructors to be used in this object. If we want this object to be visible - we need render system to process it and thus we need to add render component to this object. Also we want our cube to have some rotation. There is a translation system that apply translation to position, rotation and scale components.</p>
+
+<pre>
+class extends Beril.GameObject{
+  constructor(){
+    super([
+      Beril.RotationComponent,
+      Beril.PositionComponent,
+      Beril.ScaleComponent,
+      Beril.RenderComponent,
+      Beril.TranslationComponent,
+    ]);
+    this.name = "Cube";
+  }
+}
+</pre>
