@@ -9,12 +9,12 @@ Beril.GameObject = class {
 		if (componentClasses && componentClasses.length){
 			for(var i in componentClasses){
 				var component = new componentClasses[i]();
+				this.add(component);
 				var componentName = component.type.charAt(0).toUpperCase() + component.type.slice(1) + 'Component';
 				var setUpFunction = `setUp${componentName}`;
 				if (this[setUpFunction]){
 					this[setUpFunction](component);
 				}
-				this.add(component);
 			}
 		}
 	}

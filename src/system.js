@@ -19,10 +19,6 @@ Beril.System = class {
 				this.controller(pool.components[this.componentTypes[j]][i]);
 			}
 		}
-
-		// for(var i=0; i<pool.components[this.name].length; i++){
-		// 	this.controller(pool.components[this.name][i]);
-		// }
 	}
 
 	subscribeToPool(pool, componentTypes){
