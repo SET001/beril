@@ -21,23 +21,23 @@ define(['beril'], function(Beril){
 				wireframe: true
 			});
 			component.mesh = new THREE.Mesh(geometry, material);
+			var distance = 1000
+			component.mesh.position.x = Math.random()*distance-distance/2;
+			component.mesh.position.y = Math.random()*distance-distance/2;
+			component.mesh.position.z = Math.random()*distance-distance/2;
+			// component.mesh.position.y = Math.random()*10;
+			// component.mesh.position.z = Math.random()*10;
 			this.components.rotation.object = component.mesh.rotation;
-			component.mesh.position.set(
-				this.components.position.object.x,
-				this.components.position.object.y,
-				this.components.position.object.z);
 			this.components.position.object = component.mesh.position;
 			this.components.scale.object = component.mesh.scale;
 		}
 
 		setUpTranslationComponent(component){
-			component.rotation.x = 0.01;
-		}
+			component.rotation.x = Math.random()*0.05;
 
-		setUpPositionComponent(component){
-			component.object.z = -10;
-			// component.object.y = -1000;
-			// component.object.x = -1000;
+			component.position.x = Math.random()*0.1;
+			// component.rotation.y = 0.01;
+			// component.rotation.z = 0.01;
 		}
 	}
 });

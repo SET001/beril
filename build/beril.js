@@ -5,7 +5,7 @@ var Beril = {
 	_systemIndex: 0,
 	_entityIndex: 0,
 };
-Object.defineProperty(Beril, "version", {value: '0.0.1'});
+Object.defineProperty(Beril, "version", {value: '0.0.2'});
 
 "use strict";
 
@@ -114,7 +114,7 @@ Beril.Component = class{
 	constructor(){
 		this.id = Beril._componentIndex++;
 		this.type = "basic";
-		this.entity = {};
+		this.entity = null;
 	}
 };
 
@@ -129,12 +129,12 @@ Beril.GameObject = class {
 		if (componentClasses && componentClasses.length){
 			for(var i in componentClasses){
 				var component = new componentClasses[i]();
+				this.add(component);
 				var componentName = component.type.charAt(0).toUpperCase() + component.type.slice(1) + 'Component';
 				var setUpFunction = `setUp${componentName}`;
 				if (this[setUpFunction]){
 					this[setUpFunction](component);
 				}
-				this.add(component);
 			}
 		}
 	}
@@ -160,17 +160,42 @@ Beril.GameObject = class {
 Beril.PlayerCharacter = class extends Beril.GameObject{
 	constructor(){
 		super([
-			Beril.PositionComponent,
 			Beril.CameraComponent,
+			Beril.RotationComponent,
+			Beril.PositionComponent,
+			Beril.ScaleComponent,
+			Beril.RenderComponent,
 			Beril.InputComponent,
 			Beril.CollisionComponent,
 			Beril.PhysicComponent,
-			// Beril.TranslationComponent
+			Beril.TranslationComponent,
 		]);
+		this.name = 'PlayerCharacter';
 	}
 
 	setUpCameraComponent(component){
 		component.init('orthographic');
+	}
+
+	setUpInputComponent(component){
+		component.controller = new Beril.FPSPlayerController();
+		component.controller.component = component;
+	}
+
+	setUpRenderComponent(component){
+		component.mesh = new THREE.Object3D();
+		var camera = component.entity.components.camera.object;
+		camera.mesh = component.mesh;
+		component.mesh.add(camera);
+		this.components.rotation.object = component.mesh.rotation;
+		this.components.position.object = component.mesh.position;
+		this.components.scale.object = component.mesh.scale;
+	}
+
+	setUpTranslationComponent(component){
+		// component.rotation.x = 0.1;
+		// component.rotation.y = 0.1;
+		// component.rotation.z = 0.1;
 	}
 }
 
@@ -244,10 +269,6 @@ Beril.System = class {
 				this.controller(pool.components[this.componentTypes[j]][i]);
 			}
 		}
-
-		// for(var i=0; i<pool.components[this.name].length; i++){
-		// 	this.controller(pool.components[this.name][i]);
-		// }
 	}
 
 	subscribeToPool(pool, componentTypes){
@@ -296,7 +317,7 @@ Beril.CameraComponent = class extends Beril.Component{
 		// 		break;
 		// }
 		this.object = new THREE.PerspectiveCamera(45, 1, 1, 1000);
-		this.object.position.set(1, 0, 10);
+		// this.object.position.set(1, 0, 10);
 		// this.object.lookAt(0, 0, 0);
 	}
 };
@@ -317,6 +338,18 @@ Beril.InputComponent = class extends Beril.Component{
 	constructor(){
 		super();
 		this.type = 'input';
+		this.movingSpeed = 1;
+		this.runingSpeed = 3;
+		this.mouseSpeed = 0.003;
+		this.wheelSpeed = 0.7;
+		this.keyMappings = {
+			W: 'moveForward',
+			S: 'moveBackward',
+			A: 'moveLeft',
+			D: 'moveRight',
+			Space: 'jump',
+			Click: 'shoot',
+		}
 	}
 };
 
@@ -335,9 +368,7 @@ Beril.PositionComponent = class extends Beril.Component{
 	constructor(){
 		super();
 		this.type = 'position';
-		this.x = 0;
-		this.y = 0;
-		this.z = 0;
+		this.object = new THREE.Vector3();
 	}
 };
 
@@ -348,6 +379,28 @@ Beril.RenderComponent = class extends Beril.Component{
 		super();
 		this.type = 'render';
 		this.mesh = null;
+	}
+};
+
+"use strict";
+
+Beril.RotationComponent = class extends Beril.Component{
+	constructor(){
+		super();
+		this.type = 'rotation';
+		this.object = new THREE.Euler();
+	}
+};
+
+"use strict";
+
+Beril.ScaleComponent = class extends Beril.Component{
+	constructor(){
+		super();
+		this.type = 'scale';
+		this.x = 0;
+		this.y = 0;
+		this.z = 0;
 	}
 };
 
@@ -368,6 +421,164 @@ Beril.DefaultApplicationMode = class extends Beril.ApplicationMode{
 		super()
 	}
 }
+
+"use strict";
+
+Beril.FPSPlayerController = class{
+	constructor(){
+		// this.mesh = this.entity.renderComponent.object;
+	}
+
+	mouseUp(actions){
+		this.component.entity.components.camera.object.rotation.x += this.component.mouseSpeed*Math.abs(actions.mouseUp);
+	}
+
+	mouseDown(actions){
+		this.component.entity.components.camera.object.rotation.x -= this.component.mouseSpeed*Math.abs(actions.mouseDown);
+	}
+
+	mouseLeft(actions){
+		this.component.entity.components.rotation.object.y += this.component.mouseSpeed*Math.abs(actions.mouseLeft);
+	}
+
+	mouseRight(actions){
+		this.component.entity.components.rotation.object.y -= this.component.mouseSpeed*Math.abs(actions.mouseRight);
+	}
+
+	mouseWheel(movement){}
+
+	moveForward(actions){
+		var speed = actions.Shift ? this.component.runingSpeed : this.component.movingSpeed;
+		console.log("moving forward", speed);
+		this.component.entity.components.translation.position.x += speed/100;
+	}
+
+	moveBackward(actions){
+		var speed = actions.Shift ? this.component.runingSpeed : this.component.movingSpeed;
+		console.log("moving forward", speed);
+		this.component.entity.components.translation.position.x -= speed/100;
+	}
+
+	moveLeft(actions){
+
+	}
+
+	moveRight(actions){
+
+	}
+
+	jump(){
+		console.log("jumping");
+	}
+	shoot(){
+	}
+};
+
+"use strict";
+
+Beril.InputSystem = class extends Beril.System{
+	constructor(){
+		super();
+		this.name = 'input';
+		this.componentTypes = ['input'];
+		this.controllers = [];
+		this.actions = {};
+		this.useKeyboard = true;
+		this.useMouse = true;
+		this.keyMapping = {
+			32: 'Space',
+			16: 'Shift',
+			17: 'Ctrl',
+			18: 'Alt'
+		};
+	}
+
+	init(){
+		var self = this;
+		var renderSystem = _.find(this.application.mode.systems, {name: 'render'});
+		var container = renderSystem.container;
+
+		var mouseCallback = self.mouseMove.bind(self);
+		var mouse = new THREE.Vector2();
+		this.pointerLockEnabled = false;
+		// mouse
+		if (this.useMouse && 'pointerLockElement' in document){
+			container.onclick = function(){
+    		if (!this.pointerLockEnabled){
+					container.requestPointerLock();
+    		}else{
+
+    		}
+    	};
+			document.addEventListener('mousewheel', this.mouseWheel.bind(self));
+    	document.addEventListener('pointerlockchange', function(){
+    		self.pointerLockEnabled = (document.pointerLockElement == container);
+				if(self.pointerLockEnabled){
+					document.addEventListener("mousemove", mouseCallback, false);
+				}else{
+					document.removeEventListener("mousemove", mouseCallback, false);
+				};
+			}, false);
+		}
+		// keyboard
+		if (this.useKeyboard){
+			document.onkeydown = function(e){
+				var action = null;
+				if (e.which in self.keyMapping)
+					action = self.keyMapping[e.which]
+				else
+					action = String.fromCharCode(e.which);
+				self.actions[action] = true;
+			}
+			document.onkeyup = function(e){
+				var action = null;
+				if (e.which in self.keyMapping)
+					action = self.keyMapping[e.which]
+				else
+					action = String.fromCharCode(e.which);
+				if (action)
+					self.actions[action] = false;
+			}
+		}
+	}
+
+	controller(component){
+		for(var action in this.actions){
+			if (this.actions[action]){
+				var controllerActionName = action in component.keyMappings ? component.keyMappings[action] : action;
+				// console.log(controllerActionName, component.controller);
+				if (component.controller[controllerActionName]){
+					component.controller[controllerActionName](this.actions);
+				}
+			}
+		}
+		this.actions.mouseLeft = false;
+		this.actions.mouseRight = false;
+		this.actions.mouseUp = false;
+		this.actions.mouseDown = false;
+		// component.controller();
+	}
+
+	onComponentAdded(component){
+		// this.controllers.push(new component.controllerClass(component.entity));
+	}
+
+	mouseWheel(e){
+
+	}
+	mouseMove(e){
+		if (Math.abs(e.movementX)<100 && Math.abs(e.movementY) < 100){
+			if (e.movementX>0)
+				this.actions.mouseRight = e.movementX;
+			if (e.movementX<0)
+			 	this.actions.mouseLeft = e.movementX;
+			if (e.movementY<0)
+				this.actions.mouseUp = e.movementY;
+			if (e.movementY>0)
+			 	this.actions.mouseDown = e.movementY;
+		}
+	}
+};
 
 "use strict";
 
@@ -454,10 +665,23 @@ Beril.TranslationSystem = class extends Beril.System{
 	}
 
 	controller(component){
-		var renderComponent = component.entity.components.render;
-		renderComponent.mesh.position.add(component.position);
-		renderComponent.mesh.rotation.x += component.rotation.x;
-		renderComponent.mesh.rotation.y += component.rotation.y;
+		// var renderComponent = component.entity.components.render;
+		// renderComponent.mesh.position.add(component.position);
+		// renderComponent.mesh.rotation.x += component.rotation.x;
+		// renderComponent.mesh.rotation.y += component.rotation.y;
+
+		var positionComponent = component.entity.components.position;
+		positionComponent.object.x += component.position.x;
+		positionComponent.object.y += component.position.y;
+		positionComponent.object.z += component.position.z;
+		var rotationComponent = component.entity.components.rotation;
+		rotationComponent.object.x += component.rotation.x;
+		rotationComponent.object.y += component.rotation.y;
+		rotationComponent.object.z += component.rotation.z;
+		// if (component.entity.components.render){
+		// 	console.log(rotationComponent.object, component.entity.components.render.mesh.rotation);
+		// }
+
 		// renderComponent.mesh.rotation.z += component.rotation.z;
 		// console.log();
 	}

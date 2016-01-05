@@ -7,17 +7,24 @@ define(function(require){
 			super([
 				Beril.ThreeRenderSystem,
 				Beril.TranslationSystem,
+				Beril.InputSystem,
 			]);
 		}
 
 		init(){
 			super.init();
-			this.application.pool.add(new (require('./cube'))());
+			for(var i =0; i<1000; i++){
+				this.application.pool.add(new (require('./cube'))());
+			}
 		}
 
 		setUpRenderSystem(system){
 			system.container = document.getElementById('container');
 			system.renderer.antialias = true;
+		}
+
+		setUpInputSystem(system){
+			system.useKeyboard = false;
 		}
 	}
 })
