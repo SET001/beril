@@ -42,4 +42,8 @@ Beril.PlayerCharacter = class extends Beril.GameObject{
 		// component.rotation.y = 0.1;
 		// component.rotation.z = 0.1;
 	}
+
+	setUpPhysicComponent(component){
+		component.forces.push(new THREE.Vector3(0, 0.005, 0));
+	}
 }
