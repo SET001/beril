@@ -5,26 +5,35 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'requirejs'],
 
 
     // list of files / patterns to load in the browser
 	files: [
-		'../bower_components/three.js/build/three.js',
-		'../bower_components/lodash/lodash.js',
+        {pattern: 'bower_components/three.js/build/three.js', included: false},
+        {pattern: 'bower_components/lodash/lodash.js', included: false},
+        // '../bower_components/requirejs/require.js',
 
-		'../src/beril.js',
-        '../src/**/*.js',
-		// 'examples/collisions/js/cube.js',
-		// 'examples/collisions/js/ground.js',
-		// 'spec/systems/*.js'
-		'specs/**/*.spec.js'
+        // '../src/beril.js',
+        // '../src/**/*.js',
+        // 'examples/collisions/js/cube.js',
+        // 'examples/collisions/js/ground.js',
+        // 'spec/systems/*.js'
+        {pattern: 'build/src/**/*.js', included: false},
+
+        {pattern: 'build/tests/**/*.spec.js', included: false},
+        // '../build/src/beril.js',
+		'tests/main.js'
 	],
+
+    // paths: {
+    //     lodash: '../../bower_components/lodash/lodash.js'
+    // }
 
 
     // list of files to exclude

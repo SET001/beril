@@ -1,0 +1,6 @@
+import core = require('../core');
+
+export class ScaleComponent extends core.Component{
+	type: string = 'scale';
+	object: THREE.Vector3 = new THREE.Vector3();
+};
