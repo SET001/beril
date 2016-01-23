@@ -11,6 +11,8 @@ requirejs.config({
 	 	'/base/build/tests/application.spec.js',
 	 	'/base/build/tests/entity.spec.js',
 	 	'/base/build/tests/component.spec.js',
+	 	'/base/build/tests/system.spec.js',
+	 	'/base/build/tests/di.spec.js',
 	],
 	callback: window.__karma__.start
 });

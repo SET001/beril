@@ -1,7 +1,7 @@
 import core = require('./core');
 import {BasicApplication} from './application';
 
-export function application(name: string, systems?: Array< {new():core.System} >, controller?: Function):BasicApplication{
+export function application(name: string, systems?: Array< {new():core.System}>):BasicApplication{
 	var application: BasicApplication;
 	if (systems){
 		application = new BasicApplication(name, systems);
@@ -10,4 +10,5 @@ export function application(name: string, systems?: Array< {new():core.System} >
 		application = <core.Application> _.find(core._applications, { name: name });
 	}
 	return application;
+	
 }

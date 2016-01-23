@@ -19,9 +19,9 @@ export class Player extends core.Entity{
 		]);
 	}
 
-	// setUpCamera(component){
-	// 	component.init('orthographic');
-	// }
+	setUpCamera(component){
+		component.object.position.z = 10;
+	}
 
 	setUpInput(component){
 		component.controller = new FPSPlayerController();

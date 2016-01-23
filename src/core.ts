@@ -37,6 +37,7 @@ export class System{
 	pool: Pool;
 	initialized: boolean = false;
 	type: string = 'basic';
+	// deps: {new(): System}[];
 
 	controller(component: Component){}
 
@@ -45,7 +46,11 @@ export class System{
 	onComponentRemoved(component: Component){}
 
 	run(pool: Pool){
-		this.controller(pool.components[this.type]);
+		if (pool.components[this.type] && pool.components[this.type].length){
+			for (var i = 0; i<pool.components[this.type].length; i++){
+				this.controller(pool.components[this.type][i]);
+			}
+		}
 	}
 
 	subscribeToPool(pool: Pool){
@@ -56,9 +61,13 @@ export class System{
 
 	}
 
-	init(){
+	init(systems?: any){
 		this.initialized = true;
 	}
+}
+
+export interface IEntity{
+	new(name: string, components: Array<{new():Component}>)
 }
 
 export class Entity{
@@ -169,9 +178,11 @@ export interface Application{
 
 	setPawn()
 	run(controller?: Function)
-	entity(name: string, components: Array<{new():Component}>, constructor: Function)
 	appConfig(callback: Function)
 	sysConfig(systemType: string, configCallback: Function)
 	config(a: string|Function, b?: Function)
 	foo()
+	entity(name: string, components: Array<{new():Component}>, constructor: Function)
+	system(name: string, system: {new(): System}): Application
+	addSystem(system: System)
 }

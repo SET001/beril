@@ -1,6 +1,6 @@
 import core = require('../core');
 
-class ThreeRenderSystem extends core.System{
+export class ThreeRenderSystem extends core.System{
 	type = 'render';
 	container: HTMLElement;
 	pool: core.Pool;
@@ -44,14 +44,24 @@ class ThreeRenderSystem extends core.System{
 		this.camera = camera;
 	}
 
-	onComponentAdded(component: core.Component){
+	setScene(scene){
+		this.scene = scene;
+	}
 
+	onComponentAdded(component: core.Component){
 		this.scene.add(component.object);
-		console.log("added component to scene ", component, this.scene);
 	}
 
 	onComponentRemoved(component: core.Component){
 		this.scene.remove(component.object);
 	}
+
+	loadScene(path){
+		var loader = new THREE.ObjectLoader();
+		var self = this;
+    loader.load(path, (scene) => {
+			self.scene.copy(scene);
+			self.setSize();
+    });
+	}
 }
-export = ThreeRenderSystem;

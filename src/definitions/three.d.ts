@@ -2049,7 +2049,7 @@ declare module THREE {
         manager: LoadingManager;
         texturePass: string;
 
-        load(url: string, onLoad?: (object: Object3D) => void): void;
+        load(url: string, onLoad?: (object: any) => void): void;
         setTexturePath( value: string ): void;
         setCrossOrigin(crossOrigin: string): void;
         parse<T extends Object3D>(json: any, onLoad?: (object: Object3D) => void): T;
