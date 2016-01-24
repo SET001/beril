@@ -1,6 +1,6 @@
 import core = require('../core');
 
 export class PositionComponent extends core.Component{
-	type: string = 'position';
+	type = 'position';
 	object: THREE.Vector3 = new THREE.Vector3();
 };

@@ -30,8 +30,4 @@ export class InputSystem extends core.System{
 		// this.actions.mouseUp = false;
 		// this.actions.mouseDown = false;
 	}
-
-	init(){
-		this.initialized = true;
-	}
 }

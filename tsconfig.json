@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"watch": true,
+		"removeComments": true,
+		"outDir": "build/"
+	},
+	"files": [
+		"src/beril.ts",
+		"src/di.ts",
+		"examples/1/app.ts"
+	]
+}

@@ -7,7 +7,6 @@ export class ThreeRenderSystem extends core.System{
 	renderer: THREE.WebGLRenderer;
 	scene: THREE.Scene;
 	camera: THREE.PerspectiveCamera;
-	initialized: boolean;
 
 	constructor(){
 		super();
@@ -20,7 +19,7 @@ export class ThreeRenderSystem extends core.System{
 		this.container.appendChild(this.renderer.domElement);
 		window.addEventListener('resize', () => this.setSize());
 		this.setSize();
-		this.initialized = true;
+		this.initialized.resolve();
 	}
 
 	controller(component: core.Component){}

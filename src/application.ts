@@ -16,6 +16,7 @@ export class BasicApplication implements core.Application{
 	_entities: Array<core.Entity> = [];
 	pawn: core.Entity;
 	scenes: any[];
+	initializers: Q.Promise<any>[] = [];
 
 	constructor(public name: string, systems?: Array< {new():core.System} >, config?: core.AppDefaults){
 		this.settings = this.defaults;
@@ -44,13 +45,18 @@ export class BasicApplication implements core.Application{
 		if (controller){
 			injector.resolve(controller, this)();
 		}
-		this.foo();
+		console.log("waiting for system initializers to complete", this.initializers);
+		Q.all(this.initializers).then(() => {
+			console.log("All systems initialized!");
+			this.foo();
+		})
 		return this;
 	}
 
 	addSystem(system: core.System){
 		var init = injector.resolve(system.init, system);
 		init();
+		this.initializers.push(system.initialized.promise);
 		system.subscribeToPool(this.pool);
 		this.systems.push(system);
 	}

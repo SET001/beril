@@ -7,5 +7,6 @@ export * from './playerControllers';
 export * from './application';
 export * from './f';
 export * from './systems';
+export * from './meshObject';
 
 

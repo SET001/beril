@@ -1,4 +1,5 @@
 export var _applications: Array<Application> = [];
+
 var _applicationId:number = 0;
 var _componentId:number = 0;
 var _systemId:number = 0;
@@ -8,9 +9,12 @@ export class Component{
 	type: string = 'basic';
 	entity: Entity;
 	object: any;
+	deps: string[] = [];
 	constructor(){
 		this.id = newComponentId();
 	}
+
+	init(){}
 }
 
 export function reset(){
@@ -32,13 +36,15 @@ export function newComponentId(){
 	return _systemId++;
 }
 
-
 export class System{
 	pool: Pool;
-	initialized: boolean = false;
+	initialized: Q.Deferred<any>;
 	type: string = 'basic';
 	// deps: {new(): System}[];
 
+	constructor(){
+		this.initialized = Q.defer();
+	}
 	controller(component: Component){}
 
 	onComponentAdded(component: Component){}
@@ -62,7 +68,7 @@ export class System{
 	}
 
 	init(systems?: any){
-		this.initialized = true;
+		this.initialized.resolve();
 	}
 }
 
@@ -94,6 +100,7 @@ export class Entity{
 		if (this.pool){
 			this.pool.add(component);
 		}
+		component.init();
 	}
 
 	get(componentType: string){
@@ -175,6 +182,7 @@ export interface Application{
 	_entities: Array<Entity>;
 	pawn: Entity;
 	scenes: any[];
+	initializers: Q.Promise<any>[];
 
 	setPawn()
 	run(controller?: Function)
