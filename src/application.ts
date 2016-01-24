@@ -17,11 +17,11 @@ export class BasicApplication implements core.Application{
 	pawn: core.Entity;
 	scenes: any[];
 	initializers: Q.Promise<any>[] = [];
+	controllers: any[] = [];
 
 	constructor(public name: string, systems?: Array< {new():core.System} >, config?: core.AppDefaults){
 		this.settings = this.defaults;
 		_.assign(this.settings, config);
-		// collect systems dependenceis
 		for (var i in systems){
 			this.addSystem(new systems[i]());
 		}
@@ -30,6 +30,7 @@ export class BasicApplication implements core.Application{
 
 	setPawn(){
 		this.pawn = new this.settings.pawn();
+		this.pawn.setUpComponents();
 		var renderSystem = <systems.ThreeRenderSystem>_.find(this.systems, {type: 'render'});
 		if (renderSystem){
 			var camera = this.pawn.get('camera');
@@ -51,6 +52,15 @@ export class BasicApplication implements core.Application{
 			this.foo();
 		})
 		return this;
+	}
+
+	addObject(object){
+		object.setUpComponents();
+		object.init();
+		this.pool.addObject(object);
+		if (object.controller){
+			this.controllers.push(object);
+		};
 	}
 
 	addSystem(system: core.System){
@@ -80,6 +90,9 @@ export class BasicApplication implements core.Application{
 	foo(){
 		for (var i=0; i<this.systems.length; i++){
 			this.systems[i].run(this.pool);
+		}
+		for (var i=0; i<this.controllers.length; i++){
+			this.controllers[i].controller();
 		}
 		window.requestAnimationFrame(this.foo.bind(this));
 	}

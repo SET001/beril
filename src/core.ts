@@ -86,6 +86,11 @@ export class Entity{
 		components.map( (componentConstructor) => {
 			var component = new componentConstructor();
 			this.add(component);
+		});
+	}
+
+	setUpComponents(){
+		this.components.map( (component) => {
 			var componentName = component.type.charAt(0).toUpperCase() + component.type.slice(1);
 			var setUpFunction = `setUp${componentName}`;
 			if (this[setUpFunction]){
@@ -93,6 +98,8 @@ export class Entity{
 				}
 		});
 	}
+
+	init(){}
 
 	add(component: Component){
 		component.entity = this;
@@ -183,6 +190,7 @@ export interface Application{
 	pawn: Entity;
 	scenes: any[];
 	initializers: Q.Promise<any>[];
+	controllers: any[];
 
 	setPawn()
 	run(controller?: Function)
@@ -193,4 +201,5 @@ export interface Application{
 	entity(name: string, components: Array<{new():Component}>, constructor: Function)
 	system(name: string, system: {new(): System}): Application
 	addSystem(system: System)
+	addObject(object: Entity)
 }

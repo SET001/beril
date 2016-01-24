@@ -11,7 +11,10 @@ export class MeshObject extends core.Entity{
 			components.RenderComponent,
 			components.TranslationComponent
 		]);
+	}
 
+	init(){
+		super.init();
 		var renderComponent = this.get('render');
 		var comps = ['position', 'rotation', 'scale'];
 		for (var i in comps){
