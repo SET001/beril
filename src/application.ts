@@ -55,7 +55,6 @@ export class BasicApplication implements core.Application{
 	}
 
 	addObject(object){
-		object.setUpComponents();
 		object.init();
 		this.pool.addObject(object);
 		if (object.controller){

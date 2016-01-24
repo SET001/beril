@@ -80,6 +80,8 @@ export class Entity{
 	id: number;
 	pool: Pool;
 	components: Array<Component> = [];
+	initialized: boolean = false;
+	componentsInitialized: boolean = false;
 
 	constructor(public name: string, components: Array<{new():Component}>){
 		this.id = newComponentId();
@@ -99,7 +101,12 @@ export class Entity{
 		});
 	}
 
-	init(){}
+	init(initFunc){
+		if (!this.componentsInitialized){
+			this.setUpComponents();
+		}
+		initFunc();
+	}
 
 	add(component: Component){
 		component.entity = this;
