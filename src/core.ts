@@ -9,7 +9,6 @@ export class Component{
 	type: string = 'basic';
 	entity: Entity;
 	object: any;
-	deps: string[] = [];
 	constructor(){
 		this.id = newComponentId();
 	}
@@ -101,11 +100,12 @@ export class Entity{
 		});
 	}
 
-	init(initFunc){
+	init(initFunc?: Function){
 		if (!this.componentsInitialized){
 			this.setUpComponents();
+			this.componentsInitialized = true;
 		}
-		initFunc();
+		if (initFunc)	initFunc.call(this);
 	}
 
 	add(component: Component){

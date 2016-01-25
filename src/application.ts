@@ -30,7 +30,7 @@ export class BasicApplication implements core.Application{
 
 	setPawn(){
 		this.pawn = new this.settings.pawn();
-		this.pawn.setUpComponents();
+		this.pawn.init();
 		var renderSystem = <systems.ThreeRenderSystem>_.find(this.systems, {type: 'render'});
 		if (renderSystem){
 			var camera = this.pawn.get('camera');
@@ -39,7 +39,7 @@ export class BasicApplication implements core.Application{
 		} else {
 			console.log("can't find render system!");
 		}
-		this.pool.addObject(this.pawn);
+		// this.pool.addObject(this.pawn);
 	}
 
 	run(controller?: Function){
@@ -97,9 +97,7 @@ export class BasicApplication implements core.Application{
 	}
 
 	entity(name: string, components: Array<{new():core.Component}>, c: core.IEntity){
-		injector.register(name, function(){
-			return new c(name, components);
-		});
+		injector.register(name, c);
 		return this;
 	}
 
