@@ -1,0 +1,1 @@
+window.beril = require('../../build/engine/beril');
