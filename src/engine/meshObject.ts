@@ -10,7 +10,7 @@ export class MeshObject extends core.Entity{
 			components.ScaleComponent,
 			components.RenderComponent,
 			components.TranslationComponent,
-			components.CollisionComponent
+			// components.CollisionComponent
 		]);
 	}
 
@@ -27,14 +27,14 @@ export class MeshObject extends core.Entity{
 	}
 
 	setUpCollision(component){
-		var geometry = new THREE.SphereGeometry(1, 10, 10);
-		var material = new THREE.MeshBasicMaterial({
-			color: 0x0000ff,
-			wireframe: true
-		});
-		// component.object = new THREE.Mesh(geometry, material);
+		// var geometry = new THREE.SphereGeometry(1, 10, 10);
+		// var material = new THREE.MeshBasicMaterial({
+		// 	color: 0x0000ff,
+		// 	wireframe: true
+		// });
+		// // component.object = new THREE.Mesh(geometry, material);
 		
-		// component.blah = new THREE.Math.Sphere(1, material);
-		component.entity.get('render').object.add(component.object);
+		// // component.blah = new THREE.Math.Sphere(1, material);
+		// component.entity.get('render').object.add(component.object);
 	}
 }

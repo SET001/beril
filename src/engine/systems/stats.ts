@@ -5,7 +5,6 @@ export class StatsSystem extends core.System{
 	stats: Stats;
 
 	init(){
-		console.log("init stats");
 		this.stats = new Stats();
 		this.stats.setMode(0);
 		this.stats.domElement.style.position = 'absolute';

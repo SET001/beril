@@ -20,6 +20,7 @@ module.exports = function(config) {
         'bower_components/q/q.js',
 
         'build/beril.js',
+        'src/tests/mocks/berilMock.js',
         'src/tests/**/[^_]*.spec.js',
         // 'src/tests/test-main.js',
         // 'build/tests/**/*.spec.js',

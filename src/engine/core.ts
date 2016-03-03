@@ -206,12 +206,14 @@ export interface Application{
 	controllers: any[];
 
 	setPawn()
+	_run(controller?: Function)
 	run(controller?: Function)
 	appConfig(callback: Function)
 	sysConfig(systemType: string, configCallback: Function)
 	initSystems()
 	config(a: string|Function, b?: Function)
-	foo()
+	animate()
+	looper()
 	entity(name: string, components: Array<{new():Component}>, constructor: Function)
 	system(name: string, system: {new(): System}): Application
 	addSystem(system: System)

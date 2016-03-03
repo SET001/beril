@@ -44,18 +44,24 @@ export class BasicApplication implements core.Application{
 		this.pool.addObject(this.pawn);
 	}
 
+	_run(controller?: Function){
+		this.setPawn();
+		if (controller){
+			injector.resolve(controller, this)();
+		}
+		this.looper();
+		// window.requestAnimationFrame(this.looper.bind(this));
+	}
+
 	run(controller?: Function){
 		this.initSystems();
-		console.log("waiting for system initializers to complete", this.initializers);
-		Q.all(this.initializers).then(() => {
-			console.log("All systems initialized!");
-			
-			this.setPawn();
-			if (controller){
-				injector.resolve(controller, this)();
-			}
-			this.foo();
-		})
+		if (this.initializers.length){
+			Q.all(this.initializers).then(() => {
+				this._run(controller);
+			})
+		} else {
+			this._run(controller);
+		}
 		return this;
 	}
 
@@ -103,7 +109,12 @@ export class BasicApplication implements core.Application{
 		}
 	}
 	
-	foo(){
+	looper(){
+		this.animate();
+		window.requestAnimationFrame(this.looper.bind(this));
+	}
+
+	animate(){
  		for (var i=0; i<this.systems.length; i++){
 			// console.log("running ", this.systems[i].type);
 			this.systems[i].run(this.pool);
@@ -111,7 +122,6 @@ export class BasicApplication implements core.Application{
 		for (var i=0; i<this.controllers.length; i++){
 			this.controllers[i].controller();
 		}
-		window.requestAnimationFrame(this.foo.bind(this));
 	}
 
 	entity(name: string, components: Array<{new():core.Component}>, c: core.IEntity){
