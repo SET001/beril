@@ -10,7 +10,7 @@ export class MeshObject extends core.Entity{
 			components.ScaleComponent,
 			components.RenderComponent,
 			components.TranslationComponent,
-			// components.CollisionComponent
+			components.CollisionComponent
 		]);
 	}
 

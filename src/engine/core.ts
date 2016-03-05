@@ -10,11 +10,13 @@ export class Component{
 	type: string = 'basic';
 	entity: Entity;
 	object: any;
+	dependencies: Array<any> = [];
+	dependents: Array<String> = [];
 	constructor(){
 		this.id = newComponentId();
 	}
 
-	init(){}
+	init(){return true;}
 }
 
 export function reset(){
@@ -84,24 +86,18 @@ export class Entity{
 	id: number;
 	pool: Pool;
 	components: Array<Component> = [];
+	addComponents: Array<{new():Component}> = [];
 	initialized: boolean = false;
 	componentsInitialized: boolean = false;
+	depChain: Array<String> = [];
 
-	constructor(public name: string, components: Array<{new():Component}>){
+	constructor(public name: string){
 		this.id = newComponentId();
-		components.map( (componentConstructor) => {
-			var component = new componentConstructor();
-			this.add(component);
-		});
 	}
 
 	setUpComponents(){
-		this.components.map( (component) => {
-			var componentName = component.type.charAt(0).toUpperCase() + component.type.slice(1);
-			var setUpFunction = `setUp${componentName}`;
-			if (this[setUpFunction]){
-					this[setUpFunction](component);
-				}
+		this.addComponents.map( (componentConstructor) => {
+			this.add(componentConstructor);
 		});
 	}
 
@@ -113,13 +109,45 @@ export class Entity{
 		if (initFunc)	initFunc.call(this);
 	}
 
-	add(component: Component){
-		component.entity = this;
-		this.components.push(component);
-		if (this.pool){
-			this.pool.add(component);
+	add(componentConstructor: {new(): Component}): any{
+		var component = new componentConstructor();
+		if (!this.get(component.type)){
+			if (this.depChain.indexOf(component.type) > -1){
+				this.depChain = [];
+				throw("circular dependencies");
+			} else {
+				this.depChain.push(component.type);
+				component.entity = this;
+				var depComps = [];
+				for(var i in component.dependencies){
+					var depComp = this.add(component.dependencies[i]);
+					if (!depComp){
+						this.depChain = [];
+						throw("Can't initialize component " + component.type + " because it is depend on component " + this.depChain[this.depChain.length-1] + " which failed to initalize.");
+					} else {
+						depComps.push(depComp);
+					}
+				}
+				if (component.init()){
+					depComps.map(function(comp){
+						comp.dependents.push(component.type);
+					});
+					var componentName = component.type.charAt(0).toUpperCase() + component.type.slice(1);
+					var setUpFunction = `setUp${componentName}`;
+
+					if (this[setUpFunction]){
+						this[setUpFunction](component);
+					}
+					this.components.push(component);
+					if (this.pool){
+						this.pool.add(component);
+					}
+					this.depChain = _.without(this.depChain, component.type);
+					return component;
+				};
+			}
 		}
-		component.init();
+		return false;
 	}
 
 	get(componentType: string){
@@ -127,10 +155,17 @@ export class Entity{
 	}
 
 	remove(componentType: string){
-		if (this.pool){
-			this.pool.removeComponent(_.find(this.components, {type: componentType}));
+		var component = this.get(componentType);
+		if (component){
+			component.dependents.map((compType:string) =>{
+				this.remove(compType);
+			});
+
+			if (this.pool){
+				this.pool.removeComponent(component);
+			}
+			this.components = _.reject(this.components, { type: componentType });
 		}
-		this.components = _.reject(this.components, { type: componentType });
 	}
 }
 

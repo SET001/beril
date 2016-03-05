@@ -6,12 +6,12 @@ export class CollisionSystem extends core.System{
 	run(){}
 
 	controller(component){
-		var vector1 = new THREE.Vector3();
-		// // vector1.setFromMatrixPosition( component.object.matrixWorld );
+		// var vector1 = new THREE.Vector3();
+		// // // vector1.setFromMatrixPosition( component.object.matrixWorld );
 
-		var collisionComponents = this.pool.components['collision'];
-		component.object.updateMatrixWorld( true );
-		component.object.geometry.computeBoundingSphere();
+		// var collisionComponents = this.pool.components['collision'];
+		// component.object.updateMatrixWorld( true );
+		// component.object.geometry.computeBoundingSphere();
 		// var bs = component.object.geometry.boundingSphere.clone();
 		// bs.center.setFromMatrixPosition(component.object.matrixWorld);
 		// if (collisionComponents.length){
