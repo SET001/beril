@@ -16,7 +16,7 @@ export class Component{
 		this.id = newComponentId();
 	}
 
-	init(){return true;}
+	init(): Boolean {return true;}
 }
 
 export function reset(){
@@ -91,7 +91,7 @@ export class Entity{
 	componentsInitialized: boolean = false;
 	depChain: Array<String> = [];
 
-	constructor(public name: string){
+	constructor(public name?: string){
 		this.id = newComponentId();
 	}
 
@@ -110,8 +110,11 @@ export class Entity{
 	}
 
 	add(componentConstructor: {new(): Component}): any{
-		var component = new componentConstructor();
-		if (!this.get(component.type)){
+		var
+			component:Component = new componentConstructor(),
+			existingComponent: Component = this.get(component.type);
+
+		if (!existingComponent){
 			if (this.depChain.indexOf(component.type) > -1){
 				this.depChain = [];
 				throw("circular dependencies");
@@ -147,7 +150,7 @@ export class Entity{
 				};
 			}
 		}
-		return false;
+		return existingComponent;
 	}
 
 	get(componentType: string){

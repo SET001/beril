@@ -2,12 +2,11 @@
 
 
 export * from './core';
+export * from './entities';
 export * from './components';
-export * from './player';
-export * from './playerControllers';
 export * from './application';
-export * from './f';
 export * from './systems';
-export * from './meshObject';
+export * from './playerControllers';
+export * from './f';
 
 

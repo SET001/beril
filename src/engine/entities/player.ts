@@ -1,24 +1,20 @@
-import core = require('./core');
-import {FPSPlayerController} from './playerControllers/fps';
-import components = require('./components');
+import core = require('../core');
+import {FPSPlayerController} from '../playerControllers/fps';
+import components = require('../components');
+import {MeshObject} from './meshObject';
 
-export class Player extends core.Entity{
-
-	constructor(){
-
-		super('Player', [
+export class Player extends MeshObject{
+	
+	constructor() {
+		super();
+		this.addComponents = this.addComponents.concat([
 			components.CameraComponent,
-			components.RotationComponent,
-			components.PositionComponent,
-			components.ScaleComponent,
-			components.RenderComponent,
 			components.InputComponent,
-			components.CollisionComponent,
-			components.PhysicComponent,
-			components.TranslationComponent,
+			components.CollisionBoxComponent,
+			components.PhysicComponent
 		]);
 	}
-
+	
 	setUpCamera(component){
 		component.object.position.z = 10;
 	}
@@ -28,7 +24,7 @@ export class Player extends core.Entity{
 		component.controller.component = component;
 	}
 
-	setUpRender(component){
+	setUpMesh(component){
 		var material = new THREE.MeshBasicMaterial( {color: 0x01e4cc, side: THREE.DoubleSide} );
 		var geometry = new THREE.SphereGeometry( 10000, 32, 32 );
 		component.object = new THREE.Object3D();

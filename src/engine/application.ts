@@ -2,12 +2,12 @@ import core = require('./core');
 
 import injector = require('./di');
 import systems = require('./systems');
-import {Player} from './player';
+import entities = require('./entities');
 
 export class BasicApplication implements core.Application{
 	id: number = core.newApplicationId();
 	defaults: core.AppDefaults  = {
-		pawn: Player,
+		pawn: entities.Player,
 		scene: 'scene1'
 	};
 	settings: core.AppDefaults;
@@ -32,6 +32,7 @@ export class BasicApplication implements core.Application{
 
 	setPawn(){
 		this.pawn = new this.settings.pawn();
+		console.log("setting pawn");
 		this.pawn.init();
 		var renderSystem = <systems.ThreeRenderSystem>_.find(this.systems, {type: 'render'});
 		if (renderSystem){
@@ -42,6 +43,7 @@ export class BasicApplication implements core.Application{
 			console.log("Can't find render system!");
 		}
 		this.pool.addObject(this.pawn);
+		console.log("done");
 	}
 
 	_run(controller?: Function){

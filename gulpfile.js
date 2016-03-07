@@ -21,9 +21,15 @@ gulp.task('karma', function (done) {
 });
 
 gulp.task('browserify', ['clear'], function(){
-	return browserify({
+	var b =  browserify({
 		entries: './src/engine/browserify.js'
-	}).bundle()
+	});
+	return b.bundle()
+		.on('error', function(err){
+      console.log(err.message);
+      console.log("ending stream...");
+      this.emit('end');
+    })
 		.pipe(source('beril.js'))
 		.pipe(gulp.dest('./build/'));
 });
