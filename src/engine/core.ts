@@ -8,6 +8,7 @@ var fooo: string;
 export class Component{
 	id: number;
 	type: string = 'basic';
+	name: string = 'basic';
 	entity: Entity;
 	object: any;
 	dependencies: Array<any> = [];
@@ -255,5 +256,6 @@ export interface Application{
 	entity(name: string, components: Array<{new():Component}>, constructor: Function)
 	system(name: string, system: {new(): System}): Application
 	addSystem(system: System)
+	getSystem(type: string)
 	addObject(object: Entity)
 }

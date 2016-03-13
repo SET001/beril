@@ -16,7 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
 	files: [
         'bower_components/lodash/lodash.js',
-        'bower_components/three.js/build/three.js',
+        'bower_components/three.js/three.js',
         'bower_components/q/q.js',
 
         'build/beril.js',

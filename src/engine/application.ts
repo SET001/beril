@@ -95,6 +95,9 @@ export class BasicApplication implements core.Application{
 		this.systems.push(system);
 	}
 
+	getSystem(type: string){
+		return _.find(this.systems, {type: type});
+	}
 
 	system(name: string, system: {new(): core.System}){
 		var si = new system();

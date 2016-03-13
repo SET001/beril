@@ -7,24 +7,25 @@ export class TranslationSystem extends core.System{
 		var positionComponent, rotationComponent, scaleComponent;
 
 		if (positionComponent = component.entity.get('position')){
-			positionComponent.object.x += component.object.position.x;
-			positionComponent.object.y += component.object.position.y;
-			positionComponent.object.z += component.object.position.z;
-			var cs = _.find(this.application.systems, {type: 'collision'});
-			if (cs){
-				cs.controller(component.entity.get('render'));
-			}
+			// console.log(positionComponent.object);
+			positionComponent.object.add(component.object.position);
+			// positionComponent.object.x += component.object.position.x;
+			// positionComponent.object.y += component.object.position.y;
+			// positionComponent.object.z += component.object.position.z;
+			// var cs = _.find(this.application.systems, {type: 'collision'});
+			// if (cs){
+			// 	cs.controller(component.entity.get('render'));
+			// }
 
 		}
 		if (rotationComponent = component.entity.get('rotation')){
+			// rotationComponent.object.setFromVector3(component.object);
 			rotationComponent.object.x += component.object.rotation.x;
 			rotationComponent.object.y += component.object.rotation.y;
 			rotationComponent.object.z += component.object.rotation.z;
 		}
 		if (scaleComponent = component.entity.get('scale')){
-			scaleComponent.object.x += component.object.scale.x;
-			scaleComponent.object.y += component.object.scale.y;
-			scaleComponent.object.z += component.object.scale.z;
+			scaleComponent.object.add(component.object.scale);
 		}
 		// rotationComponent.object.add(component.object.rotation);
 	}

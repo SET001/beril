@@ -14,9 +14,9 @@
   ],
   "devDependencies": {
     "lodash": "~3.10.0",
-    "three.js": "threejs#*"
+    "three.js": "~0.74.0"
   },
   "dependencies": {
-    "q": "~2.0.2"
+    "q": "1.0.1"
   }
 }

@@ -10,7 +10,7 @@ export class Player extends MeshObject{
 		this.addComponents = this.addComponents.concat([
 			components.CameraComponent,
 			components.InputComponent,
-			components.CollisionBoxComponent,
+			// components.CollisionBoxComponent,
 			components.PhysicComponent
 		]);
 	}
