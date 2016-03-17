@@ -4,11 +4,18 @@ export class TranslationSystem extends core.System{
 	type = 'translation';
 
 	controller(component: core.Component){
-		var positionComponent, rotationComponent, scaleComponent;
+		var mesh, rotationComponent, scaleComponent;
 
-		if (positionComponent = component.entity.get('position')){
+		if (mesh = component.entity.get('mesh')){
 			// console.log(positionComponent.object);
-			positionComponent.object.add(component.object.position);
+			// positionComponent.object.add(component.object.position);
+			try{
+				mesh.object.translateX(component.object.position.x);
+				mesh.object.translateY(component.object.position.y);
+				mesh.object.translateZ(component.object.position.z);
+			} catch (e) {
+				console.log(e);
+			}
 			// positionComponent.object.x += component.object.position.x;
 			// positionComponent.object.y += component.object.position.y;
 			// positionComponent.object.z += component.object.position.z;

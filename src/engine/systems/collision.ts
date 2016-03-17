@@ -13,14 +13,17 @@ export class CollisionSystem extends core.System{
 		if (pool.components[this.type].length){
 			pool.components[this.type].map((component) => {
 				if (this.hasTranslations(component.entity)){
+					var min = component.object.min;
+					var max = component.object.max;
 					this.updateCollisionObject(component, component.entity.get('translation'));
 					pool.components[this.type].map( (c) => {
 						if ((c.id !== component.id) && this.checkCollision(component, c)){
 							if (component.entity.onCollision){
 								component.entity.onCollision();
 							}
-							this.restoreCollisionObject(component, component.entity.get('translation'));
-							// this.resetTranslations(component.entity.get('translation'));
+							component.object.min = min;
+							component.object.max = max;
+							this.resetTranslations(component.entity.get('translation'));
 						}
 					});
 				}
@@ -45,9 +48,9 @@ export class CollisionSystem extends core.System{
 	// }
 
 	resetTranslations(translations){
-		translations.position.set(0, 0, 0);
-		translations.rotation.set(0, 0, 0);
-		translations.scale.set(0, 0, 0);
+		// translations.object.position.set(0, 0, 0);
+		// translations.object.rotation.set(0, 0, 0);
+		// translations.object.scale.set(0, 0, 0);
 	}
 
 	hasTranslations(object: core.Entity){

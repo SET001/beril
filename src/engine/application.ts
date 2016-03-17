@@ -114,6 +114,7 @@ export class BasicApplication implements core.Application{
 		}
 	}
 	
+
 	looper(){
 		this.animate();
 		window.requestAnimationFrame(this.looper.bind(this));
