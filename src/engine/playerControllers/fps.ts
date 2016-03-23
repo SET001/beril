@@ -1,15 +1,43 @@
 import beril = require('../beril');
 
 export class FPSPlayerController{
-	
-	mouseUp(){
-		console.log("Asdasd");
+	mouseAcceleration: number = 0.02;
+	moveSpeed: number = 0.3;
+	component: beril.Component;
+
+	mouseUp(foo){
+		var camera = this.component.entity.get('camera');
+		camera.object.rotation.x += this.mouseAcceleration*Math.abs(foo.mouseUp);
 	}
 
-	mouseDown(){
-
+	mouseDown(foo){
+		var camera = this.component.entity.get('camera');
+		camera.object.rotation.x -= this.mouseAcceleration*Math.abs(foo.mouseDown);
 	}
 
-	mouseLeft(){}
-	mouseRight(){}
+	mouseLeft(foo){
+		var camera = this.component.entity.get('mesh');
+		camera.object.rotation.y += this.mouseAcceleration*Math.abs(foo.mouseLeft);
+	}
+
+	mouseRight(foo){
+		var camera = this.component.entity.get('mesh');
+		camera.object.rotation.y -= this.mouseAcceleration*Math.abs(foo.mouseRight);
+	}
+
+	moveForward(){
+		this.component.entity.get('translation').object.position.z -= this.moveSpeed;
+	}
+
+	moveBackward(){
+		this.component.entity.get('translation').object.position.z += this.moveSpeed;
+	}
+
+	moveLeft(){
+		this.component.entity.get('translation').object.position.x -= this.moveSpeed;
+	}
+
+	moveRight(){
+		this.component.entity.get('translation').object.position.x += this.moveSpeed;
+	}
 }

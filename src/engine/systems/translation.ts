@@ -13,6 +13,9 @@ export class TranslationSystem extends core.System{
 				mesh.object.translateX(component.object.position.x);
 				mesh.object.translateY(component.object.position.y);
 				mesh.object.translateZ(component.object.position.z);
+				component.object.position.x = 0;
+				component.object.position.y = 0;
+				component.object.position.z = 0;
 			} catch (e) {
 				console.log(e);
 			}
@@ -35,5 +38,10 @@ export class TranslationSystem extends core.System{
 			scaleComponent.object.add(component.object.scale);
 		}
 		// rotationComponent.object.add(component.object.rotation);
+		
+	}
+
+	reset(component: core.Component){
+		
 	}
 }

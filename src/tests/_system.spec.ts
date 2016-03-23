@@ -18,7 +18,7 @@ class Bar extends beril.System{
 
 }
 
-fdescribe('System', function(){
+describe('System', function(){
 	it('should init all dependent systems', function(){
 		beril.application('test', [beril.ThreeRenderSystem])
 		.system('Bar', Bar)

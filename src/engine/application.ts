@@ -32,7 +32,6 @@ export class BasicApplication implements core.Application{
 
 	setPawn(){
 		this.pawn = new this.settings.pawn();
-		console.log("setting pawn");
 		this.pawn.init();
 		var renderSystem = <systems.ThreeRenderSystem>_.find(this.systems, {type: 'render'});
 		if (renderSystem){
@@ -40,10 +39,9 @@ export class BasicApplication implements core.Application{
 			renderSystem.setCamera(camera.object);
 			renderSystem.setSize();
 		} else {
-			console.log("Can't find render system!");
+			// console.log("Can't find render system!");
 		}
 		this.pool.addObject(this.pawn);
-		console.log("done");
 	}
 
 	_run(controller?: Function){

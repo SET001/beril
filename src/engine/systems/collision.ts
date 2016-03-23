@@ -20,6 +20,10 @@ export class CollisionSystem extends core.System{
 						if ((c.id !== component.id) && this.checkCollision(component, c)){
 							if (component.entity.onCollision){
 								component.entity.onCollision();
+								// console.log("collision");
+								component.entity.get('translation').object.position.x = 0;
+								component.entity.get('translation').object.position.y = 0;
+								component.entity.get('translation').object.position.z = 0;
 							}
 							component.object.min = min;
 							component.object.max = max;

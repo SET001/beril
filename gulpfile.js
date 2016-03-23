@@ -55,8 +55,10 @@ gulp.task('compile', function(){
 
 
 gulp.task('copy', ['browserify'], function(){
-	return gulp.src('build/beril.js')
+	gulp.src('build/beril.js')
 		.pipe(gulpCopy('../site/', {prefix:1}));
+	return gulp.src('build/beril.js')
+		.pipe(gulpCopy('../../avalon/vendors/beril/', {prefix:2}));
 });
 
 gulp.task('default', ['copy']);

@@ -15,18 +15,12 @@ export class Player extends MeshObject{
 		]);
 	}
 	
-	setUpCamera(component){
-		component.object.position.z = 10;
-	}
-
 	setUpInput(component){
 		component.controller = new FPSPlayerController();
 		component.controller.component = component;
 	}
 
 	setUpMesh(component){
-		var material = new THREE.MeshBasicMaterial( {color: 0x01e4cc, side: THREE.DoubleSide} );
-		var geometry = new THREE.SphereGeometry( 10000, 32, 32 );
 		component.object = new THREE.Object3D();
 		// var camera = component.entity.get('camera').object;
 		// camera.object = component.object;
