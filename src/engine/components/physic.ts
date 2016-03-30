@@ -1,11 +1,20 @@
 import core = require('../core');
+import physic = require('../physic');
+import components = require('../components');
+
 
 export class PhysicComponent extends core.Component{
 	type: string = 'physic';
-	object: THREE.Vector3;
-	forces: any[];
+	forces: physic.Force[];
 	mass: number;
 	speed: number;
+
+	constructor(){
+		super();
+		this.dependencies = [
+			components.TranslationComponent
+		]
+	}
 
 	init(){
 		this.object = new THREE.Vector3();
@@ -13,5 +22,9 @@ export class PhysicComponent extends core.Component{
 		this.speed = 0;
 		this.forces = [];
 		return true;
+	}
+
+	controller(){
+
 	}
 };

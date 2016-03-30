@@ -7,6 +7,7 @@ export * from './components';
 export * from './application';
 export * from './systems';
 export * from './playerControllers';
+export * from './physic';
 export * from './f';
 
 

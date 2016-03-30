@@ -1,8 +1,8 @@
 import beril = require('../beril');
 
 export class FPSPlayerController{
-	mouseAcceleration: number = 0.02;
-	moveSpeed: number = 0.3;
+	mouseAcceleration: number = 0.01;
+	moveSpeed: number = 0.5;
 	component: beril.Component;
 
 	mouseUp(foo){

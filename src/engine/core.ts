@@ -61,7 +61,7 @@ export class System{
 				this.controller(pool.components[this.type][i]);
 			}
 		} else {
-			console.log("no components of type ", this.type);
+			// console.log("no components of type ", this.type);
 		}
 	}
 

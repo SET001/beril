@@ -11,7 +11,7 @@ export class Player extends MeshObject{
 			components.CameraComponent,
 			components.InputComponent,
 			// components.CollisionBoxComponent,
-			components.PhysicComponent
+			// components.PhysicComponent
 		]);
 	}
 	
