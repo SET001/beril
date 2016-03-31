@@ -1,10 +1,12 @@
 import core = require('../core');
+import components = require('../components');
 
 class InputActions{
 	mouseUp: number;
 	mouseDown: number;
 	mouseLeft: number;
 	mouseRight: number;
+	mouseWheel: number;
 }
 export class InputSystem extends core.System{
 	type = 'input';
@@ -88,7 +90,7 @@ export class InputSystem extends core.System{
 		this.initialized.resolve(this);
 	}
 
-	controller(component: core.Component){
+	controller(component: components.InputComponent){
 		// console.log(this.actions);
 		for(var action in this.actions){
 			if (this.actions[action]){
@@ -103,6 +105,7 @@ export class InputSystem extends core.System{
 		this.actions.mouseRight = 0;
 		this.actions.mouseUp = 0;
 		this.actions.mouseDown = 0;
+		this.actions.mouseWheel = 0;
 	// }
 
 	// run(){
@@ -110,7 +113,7 @@ export class InputSystem extends core.System{
 	}
 
 	mouseWheel(e){
-
+		this.actions.mouseWheel = e.deltaY;
 	}
 
 	mouseMove(e){

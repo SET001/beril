@@ -1,5 +1,9 @@
 var dependencies: {} = {};
 
+export function resetDI(){
+	dependencies = {};
+}
+
 export function register(name: string, value: any){
 	dependencies[name] = value;
 }

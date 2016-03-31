@@ -8,6 +8,7 @@ export class InputComponent extends core.Component{
 	mouseSpeed: number = 0.003;
 	wheelSpeed: number = 0.7;
 	keyMappings: {};
+	controller: Function;
 
 	constructor(){
 		super();

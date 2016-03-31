@@ -1,7 +1,7 @@
 /// <reference path="definitions/definitions.d.ts" />
 describe('Systems', function(){
 
-	fdescribe('Physic', function() {
+	describe('Physic', function() {
 		var system;
 
 		beforeEach(function(){
@@ -51,10 +51,10 @@ describe('Systems', function(){
 				change: -3,
 				name: 'jumping',
 			}));
-			for (var i=0; i<20; i++){
-				system.controller(pc);
-				console.log(cube.get('translation').object.position);
-			}
+			// for (var i=0; i<20; i++){
+			// 	system.controller(pc);
+			// 	console.log(cube.get('translation').object.position);
+			// }
 		})
 
 	});

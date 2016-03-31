@@ -1,20 +1,32 @@
 /// <reference path="definitions/definitions.d.ts" />
 describe('Systems', function(){
 
-	describe('Collision', function() {
+	fdescribe('Collision', function() {
 		// var app1,	app2,	app3, foo;
 
 		beforeEach(function(){
 			beril.reset();
 		});
 
-		it('should update bounding objects position', function(){
+		it('should update bounding sphere position', function(){
 			var sphere = new beril.SphereMesh();
 			sphere.add(beril.CollisionSphereComponent);
 			sphere.init();
 			sphere.get('position').object.x = 10;
 			expect(sphere.get('collision').object.center.x).toBe(10);
 		});
+
+		it('should update bounding sphere position', function(){
+			var sphere = new beril.BoxMesh();
+			sphere.init(function(){
+				this.get('position').object.x = 10;
+				this.add(beril.CollisionBoxComponent);
+				this.get('position').object.x = 100;
+				console.log(this.get('collision').object.min);
+			});
+			// expect(sphere.get('collision').object.center.x).toBe(10);
+		});
+
 
 		describe('blah', function(){
 			var app, mesh1, mesh2, cs;

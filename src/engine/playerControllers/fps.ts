@@ -5,6 +5,11 @@ export class FPSPlayerController{
 	moveSpeed: number = 0.5;
 	component: beril.Component;
 
+	mouseWheel(foo){
+		console.log("mouse wheel", foo);
+		this.component.entity.get('camera').object.translateZ(foo.mouseWheel/Math.abs(foo.mouseWheel));
+	}
+
 	mouseUp(foo){
 		var camera = this.component.entity.get('camera');
 		camera.object.rotation.x += this.mouseAcceleration*Math.abs(foo.mouseUp);

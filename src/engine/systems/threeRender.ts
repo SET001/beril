@@ -12,7 +12,6 @@ export class ThreeRenderSystem extends core.System{
 		super();
 		this.container = document.body;
 		this.renderer = new THREE.WebGLRenderer({antialias: true});
-
 		this.scene = new THREE.Scene();
 	}
 	

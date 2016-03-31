@@ -21,10 +21,10 @@ export class CollisionSystem extends core.System{
 							if (component.entity.onCollision){
 								component.entity.onCollision();
 								// console.log("collision");
-								component.entity.get('translation').object.position.x = 0;
-								component.entity.get('translation').object.position.y = 0;
-								component.entity.get('translation').object.position.z = 0;
 							}
+							component.entity.get('translation').object.position.x = 0;
+							component.entity.get('translation').object.position.y = 0;
+							component.entity.get('translation').object.position.z = 0;
 							component.object.min = min;
 							component.object.max = max;
 							this.resetTranslations(component.entity.get('translation'));
@@ -71,12 +71,13 @@ export class CollisionSystem extends core.System{
 
 	updateCollisionObject(component: core.Component, translation){
 		if (component.name === 'collisionBox'){
-			component.object.setFromPoints(component.entity.get('mesh').object.geometry.vertices);
-			component.object.min.add(component.entity.get('position').object);
-			component.object.max.add(component.entity.get('position').object);
+			component.object.setFromObject(component.entity.get('mesh').object);
+			// component.object.setFromPoints(component.entity.get('mesh').object.geometry.vertices);
+			// component.object.min.add(component.entity.get('position').object);
+			// component.object.max.add(component.entity.get('position').object);
 
-			component.object.min.add(translation.object.position);
-			component.object.max.add(translation.object.position);
+			// component.object.min.add(translation.object.position);
+			// component.object.max.add(translation.object.position);
 		}
 		// objects.map((component) => {
 		// 	component.object.center = component.entity.get('mesh').object.position;
