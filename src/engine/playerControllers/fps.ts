@@ -6,7 +6,6 @@ export class FPSPlayerController{
 	component: beril.Component;
 
 	mouseWheel(foo){
-		console.log("mouse wheel", foo);
 		this.component.entity.get('camera').object.translateZ(foo.mouseWheel/Math.abs(foo.mouseWheel));
 	}
 

@@ -14,19 +14,21 @@ export class PhysicSystem extends core.System{
 	];
 
 	controller(component: components.PhysicComponent){
-		var pt = component.entity.get('translation');
-
+		var v;
 		if (component && component.forces){
 			for(var i in component.forces){
 				var force = component.forces[i];
-				var v = force.vector.clone().multiplyScalar(force.power);
-				pt.object.position.add(v);
+				v = force.vector.clone().multiplyScalar(force.power);
+				component.velocity.add(v);
+
+				// 	// pt.object.position.add(v);
 				force.power += force.change;
 				if (force.power <= 0){
 					component.forces.splice(i, 1);
 				}
 			}
 		}
+		component.entity.get('translation').object.position.add(component.velocity);
 	}
 
 	getForce(forceName: string){

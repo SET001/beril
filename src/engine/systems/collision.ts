@@ -22,6 +22,7 @@ export class CollisionSystem extends core.System{
 								component.entity.onCollision();
 								// console.log("collision");
 							}
+							component.entity.get('physic').velocity = new THREE.Vector3(0, 0, 0);
 							component.entity.get('translation').object.position.x = 0;
 							component.entity.get('translation').object.position.y = 0;
 							component.entity.get('translation').object.position.z = 0;
@@ -76,8 +77,8 @@ export class CollisionSystem extends core.System{
 			// component.object.min.add(component.entity.get('position').object);
 			// component.object.max.add(component.entity.get('position').object);
 
-			// component.object.min.add(translation.object.position);
-			// component.object.max.add(translation.object.position);
+			component.object.min.add(translation.object.position);
+			component.object.max.add(translation.object.position);
 		}
 		// objects.map((component) => {
 		// 	component.object.center = component.entity.get('mesh').object.position;

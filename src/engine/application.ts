@@ -58,6 +58,8 @@ export class BasicApplication implements core.Application{
 		if (this.initializers.length){
 			Q.all(this.initializers).then(() => {
 				this._run(controller);
+			}).fail(function(error){
+				console.error(error);
 			})
 		} else {
 			this._run(controller);

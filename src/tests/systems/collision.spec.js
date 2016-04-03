@@ -1,7 +1,7 @@
 /// <reference path="definitions/definitions.d.ts" />
 describe('Systems', function(){
 
-	fdescribe('Collision', function() {
+	describe('Collision', function() {
 		// var app1,	app2,	app3, foo;
 
 		beforeEach(function(){
@@ -22,7 +22,6 @@ describe('Systems', function(){
 				this.get('position').object.x = 10;
 				this.add(beril.CollisionBoxComponent);
 				this.get('position').object.x = 100;
-				console.log(this.get('collision').object.min);
 			});
 			// expect(sphere.get('collision').object.center.x).toBe(10);
 		});

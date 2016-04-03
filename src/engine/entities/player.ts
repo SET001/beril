@@ -4,7 +4,7 @@ import components = require('../components');
 import {MeshObject} from './meshObject';
 
 export class Player extends MeshObject{
-	
+	name: string = 'Player';
 	constructor() {
 		super();
 		this.addComponents = this.addComponents.concat([
