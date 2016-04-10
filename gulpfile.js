@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	gulpCopy = require('gulp-copy'),
 	del = require('del'),
+	shadersComposer = require('./shadersComposer'),
 	Server = require('karma').Server;
 
 gulp.task('compilew', function(){
@@ -20,9 +21,9 @@ gulp.task('karma', function (done) {
 	  }, done).start();
 });
 
-gulp.task('browserify', ['clear'], function(){
+gulp.task('browserify', ['clear', 'compose_shaders'], function(){
 	var b =  browserify({
-		entries: './src/engine/browserify.js'
+		entries: ['./src/engine/browserify.js', './src/engine/shaders/shaders.js']
 	});
 	return b.bundle()
 		.on('error', function(err){
@@ -39,6 +40,12 @@ gulp.task('clear', ['compile'], function (done) {
     '../site/beril.js',
   ], {force: true});
   done();
+});
+
+gulp.task('compose_shaders', function(){
+	return gulp.src(['src/engine/shaders/**/[^_]*.glsl'])
+		.pipe(shadersComposer('shaders.js'))
+		.pipe(gulp.dest('./'));
 });
 
 gulp.task('compile', function(){
@@ -64,5 +71,5 @@ gulp.task('copy', ['browserify'], function(){
 gulp.task('default', ['copy']);
 
 gulp.task('watch', function() {
-	gulp.watch('./src/**/[^_]*.ts', ['default']);
+	gulp.watch(['./src/**/[^_]*.ts', './src/engine/shaders/**/*.glsl'], ['default']);
 });

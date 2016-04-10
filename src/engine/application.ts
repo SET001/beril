@@ -79,11 +79,13 @@ export class BasicApplication implements core.Application{
 	}
 
 	addObject(object){
-		object.init();
-		this.pool.addObject(object);
-		if (object.controller){
-			this.controllers.push(object);
-		};
+		object.init().then(() => {
+			console.log("application: adding object", object);
+			this.pool.addObject(object);
+			if (object.controller){
+				this.controllers.push(object);
+			};
+		});
 	}
 
 	addSystem(system: core.System){
@@ -136,7 +138,7 @@ export class BasicApplication implements core.Application{
 	}
 
 	appConfig(callback: Function){
-
+		injector.resolve(callback, this)();
 	}
 
 

@@ -19,6 +19,26 @@ describe('Entity', function(){
 			entity.add(beril.Component);
 			expect(spy).toHaveBeenCalled()
 		});
+
+		it('should wait for components setups', function(done){
+			var TestEntity = function(){};
+			TestEntity.prototype = new beril.Entity();
+			TestEntity.prototype.setUpBasic = function(){
+				var defer = Q.defer();
+				setTimeout(function(){
+					defer.resolve("lol");
+				}, 1);
+				return defer.promise;
+
+			};
+			var entity = new TestEntity();
+			entity.add(beril.Component);
+
+			entity.init().then(function(d){
+				expect(d).toEqual(['lol']);
+				done();
+			});
+		});
 	})
 
 	describe('components adding', function(){

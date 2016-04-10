@@ -12,11 +12,9 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
-    "lodash": "~3.10.0",
-    "three.js": "~0.74.0"
-  },
   "dependencies": {
-    "q": "1.0.1"
+    "q": "1.0.1",
+    "lodash": "~3.10.0",
+    "three.js": "~0.75.0"
   }
 }

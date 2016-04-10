@@ -48,7 +48,7 @@ export class ThreeRenderSystem extends core.System{
 	}
 
 	onComponentAdded(component: core.Component){
-		this.scene.add(component.object);
+		this.scene.add(component.entity.get('mesh').object);
 	}
 
 	onComponentRemoved(component: core.Component){

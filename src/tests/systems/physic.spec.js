@@ -24,17 +24,15 @@ describe('Systems', function(){
 			});
 
 			it('forces should change velocity', function(){
-				console.log(cube.get('position').object);
 				system.controller(pc);
 				system.controller(pc);
 				system.controller(pc);
 				system.controller(pc);
 				system.controller(pc);
 				expect(pc.velocity.y).toBe(-5);
-				console.log(cube.get('position').object);
 			});
 
-			fit('2 forces', function(){
+			it('2 forces', function(){
 				pc.forces.push(new beril.Force({
 					vector: new THREE.Vector3(0, 1, 0),
 					power: 2,
@@ -42,7 +40,6 @@ describe('Systems', function(){
 				}));
 				for (var i=0; i<50; i++){
 					system.controller(pc);
-					console.log(pc.velocity);
 				}
 				// system.controller(pc);
 				// system.controller(pc);

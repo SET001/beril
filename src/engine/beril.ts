@@ -10,4 +10,6 @@ export * from './playerControllers';
 export * from './physic';
 export * from './f';
 
+export * from './shadersHelper';
+export * from './materials';
 

@@ -88,8 +88,8 @@ export class Entity{
 	pool: Pool;
 	components: Array<Component> = [];
 	addComponents: Array<{new():Component}> = [];
-	initialized: boolean = false;
-	componentsInitialized: boolean = false;
+	ready: Q.Promise<any>;
+	initialisers: Array<Q.Promise<any>> = [];
 	depChain: Array<String> = [];
 
 	constructor(public name?: string){
@@ -102,12 +102,13 @@ export class Entity{
 		});
 	}
 
-	init(initFunc?: Function){
-		if (!this.componentsInitialized){
-			this.setUpComponents();
-			this.componentsInitialized = true;
-		}
-		if (initFunc)	initFunc.call(this);
+	init(initFunc?: Function):Q.Promise<any>{
+		this.setUpComponents();
+		this.ready = Q.all(this.initialisers);
+		this.ready.then(() => {
+			initFunc.call(this);
+		});
+		return this.ready;
 	}
 
 	add(componentConstructor: {new(): Component}): any{
@@ -140,7 +141,7 @@ export class Entity{
 					var setUpFunction = `setUp${componentName}`;
 
 					if (this[setUpFunction]){
-						this[setUpFunction](component);
+						this.initialisers.push(this[setUpFunction](component));
 					}
 					this.components.push(component);
 					if (this.pool){

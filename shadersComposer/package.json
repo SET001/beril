@@ -1,0 +1,8 @@
+{
+  "name": "shadersComposer",
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "path": "^0.12.7",
+    "through2": "^2.0.1"
+  }
+}
