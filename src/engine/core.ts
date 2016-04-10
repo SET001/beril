@@ -5,6 +5,8 @@ var _componentId:number = 0;
 var _systemId:number = 0;
 var fooo: string;
 
+export var version: string = '0.1.0';
+
 export class Component{
 	id: number;
 	type: string = 'basic';
