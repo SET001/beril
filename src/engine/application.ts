@@ -41,7 +41,7 @@ export class BasicApplication implements core.Application{
 		} else {
 			// console.log("Can't find render system!");
 		}
-		this.pool.addObject(this.pawn);
+		this.addObject(this.pawn);
 	}
 
 	_run(controller?: Function){
@@ -80,12 +80,15 @@ export class BasicApplication implements core.Application{
 
 	addObject(object){
 		object.init().then(() => {
-			console.log("application: adding object", object);
 			this.pool.addObject(object);
 			if (object.controller){
 				this.controllers.push(object);
 			};
 		});
+	}
+
+	removeObject(object){
+		this.pool.removeObject(object);
 	}
 
 	addSystem(system: core.System){

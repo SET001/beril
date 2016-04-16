@@ -61,17 +61,29 @@ export class Landscape extends core.Entity{
 			this.config.heightMap]
 			.concat(this.config.textures))
 		.then((resources) => {
-			console.log(resources);
+
+			console.log("===>", resources[1].value);
+			var image = resources[1].value.image;
+			var canvas = document.createElement( 'canvas' );
+			canvas.width = image.width;
+			canvas.height = image.height;
+
+			var context = canvas.getContext( '2d' );
+			context.drawImage( image, 0, 0 );
+
+	    var heightMap = context.getImageData( 0, 0, image.width, image.height );
+	    console.log("heightmap data", heightMap);
+
 			var geometry = new THREE.PlaneGeometry(
 				this.config.width,
 				this.config.length,
 				this.config.widthSegments,
 				this.config.lengthSegments);
+			// heightMap: resources[1].value,
 			var material = new materials.LandscapeMaterial({
 				blendMap: resources[0].value,
-				heightMap: resources[1].value,
 				textures: resources.slice(2),
-				scale: 10
+				scale: 200
 			});
 			component.object = new THREE.Mesh(geometry, material);
 			component.object.receiveShadow = true;

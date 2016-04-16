@@ -5,7 +5,7 @@ var _componentId:number = 0;
 var _systemId:number = 0;
 var fooo: string;
 
-export var version: string = '0.1.0';
+export var version: string = '0.1.1';
 
 export class Component{
 	id: number;
@@ -205,6 +205,19 @@ export class Pool{
 		object.pool = this;
 	}
 
+	removeObject(object: Entity){
+		for (var i in object.components){
+			var component = object.components[i];
+			this.removeComponent(component);
+			for(var j in this.subscriptions){
+				var subscription = this.subscriptions[j];
+				if (subscription.type === component.type){
+					subscription.onComponentRemoved(component);
+				}
+			}
+		}
+	}
+
 	add(item: Component | Entity){
 		if (item instanceof Component){
 			this.addComponent(item);
@@ -261,4 +274,5 @@ export interface Application{
 	addSystem(system: System)
 	getSystem(type: string)
 	addObject(object: Entity)
+	removeObject(object: Entity)
 }

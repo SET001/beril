@@ -8,14 +8,21 @@ class ShadersHelper{
      });
   }
 
+  _load(shader: string){
+  	var path = this.path ? this.path + '/' + shader : shader;
+		var shaderName = shader.split('.');
+		if (shaderName.length) shaderName.pop();
+		shaderName = shaderName.join('.');
+		this.loader.load(path, (response) => {
+			console.log("===>", shaderName);
+			THREE.ShaderChunk[shaderName] = this.foo(response);
+			// console.log(THREE.ShaderChunk[shaderName]);
+		});
+  }
+
 	load(shaders: string[]){
-		for(var shaderName of shaders){
-			this.loader.load(this.path + '/' + shaderName + '_frag.glsl', (response) => {
-				THREE.ShaderChunk[shaderName+'_fragment'] = this.foo(response);
-			});
-			this.loader.load(this.path + '/' + shaderName + '_vert.glsl', (response) => {
-				THREE.ShaderChunk[shaderName+'_vertex'] = this.foo(response);
-			});
+		for(var shader of shaders){
+			this._load(shader);
 		}
 	}
 
