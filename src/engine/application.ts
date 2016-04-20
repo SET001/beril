@@ -19,6 +19,7 @@ export class BasicApplication implements core.Application{
 	scenes: any[];
 	initializers: Q.Promise<any>[] = [];
 	controllers: any[] = [];
+	items: any[] = [];
 
 	constructor(public name: string, systems?: Array< {new():core.System} >, config?: core.AppDefaults){
 		this.settings = this.defaults;
@@ -84,6 +85,7 @@ export class BasicApplication implements core.Application{
 			if (object.controller){
 				this.controllers.push(object);
 			};
+			this.items.push(object);
 		});
 	}
 

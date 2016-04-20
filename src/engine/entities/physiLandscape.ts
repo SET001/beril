@@ -47,7 +47,7 @@ export class PhysiLandscape extends Landscape{
 			}
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
-			
+
 
 
 			var landscapeMat = new materials.LandscapeMaterial({
@@ -67,6 +67,7 @@ export class PhysiLandscape extends Landscape{
 				0, // mass,
 				image.width-1,
 				image.height-1);
+			component.object.name = 'PhysiLandscape';
 			component.object.receiveShadow = true;
 			component.object.castShadow = true;
 			component.object.rotation.x = -Math.PI / 2;

@@ -17,10 +17,7 @@ export class PhysiRenderSystem extends ThreeRenderSystem{
 	}
 
 	run(pool: core.Pool){
-		if (!this.initialized) this.init();
-		if (pool.components[this.type] && this.camera && this.scene){
-			this.scene.simulate();
+			this.scene.simulate(undefined, 1);
 			this.renderer.render(this.scene, this.camera);
-		}
 	}
 }
