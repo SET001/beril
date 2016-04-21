@@ -3,3 +3,4 @@
 ///<reference path="q.d.ts"/>
 ///<reference path="three.stats.d.ts"/>
 ///<reference path="physijs.d.ts"/>
+///<reference path="socket.io.d.ts"/>

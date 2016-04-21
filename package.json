@@ -28,6 +28,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-requirejs": "^0.2.1",
     "karma-spec-reporter": "0.0.22",
+    "mock-socket": "^2.0.0",
     "phantomjs": "^1.9.19",
     "rename": "^1.0.3",
     "requirejs": "^2.1.22",

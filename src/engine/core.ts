@@ -259,6 +259,7 @@ export interface Application{
 	scenes: any[];
 	initializers: Q.Promise<any>[];
 	controllers: any[];
+	items: any[];
 
 	setPawn()
 	_run(controller?: Function)
@@ -275,4 +276,18 @@ export interface Application{
 	getSystem(type: string)
 	addObject(object: Entity)
 	removeObject(object: Entity)
+}
+
+import applications = require ('./application');
+
+export function application(name: string, systems?: Array< {new():System}>):Application{
+	var application: applications.BasicApplication;
+	if (systems){
+		application = new applications.BasicApplication(name, systems);
+		_applications.push(application);
+	} else {
+		application = <Application> _.find(_applications, { name: name });
+	}
+	return application;
+	
 }
