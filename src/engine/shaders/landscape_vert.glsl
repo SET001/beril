@@ -21,17 +21,12 @@ varying vec3 vPosition;
 #include <skinning_pars_vertex>
 #include <shadowmap_pars_vertex>
 #include <logdepthbuf_pars_vertex>
-
-uniform sampler2D heightMap;
-uniform float bumpScale;
-varying float vAmount;
-
-attribute float height;
+#include <clipping_planes_pars_vertex>
 
 void main() {
 
 	vUv = uv;
-  vPosition = position;
+	vPosition = position;
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -48,9 +43,11 @@ void main() {
 	#include <skinning_vertex>
 	#include <project_vertex>
 	#include <logdepthbuf_vertex>
+	#include <clipping_planes_vertex>
 
 	#include <worldpos_vertex>
 	#include <envmap_vertex>
 	#include <lights_lambert_vertex>
 	#include <shadowmap_vertex>
+
 }
