@@ -53,9 +53,14 @@ gulp.task('compile', function(){
 		'src/**/[^_]*.ts'
 	])
 	.pipe(ts({
-		noImplicitAny: false,
-		noExternalResolve: true,
-		module: 'commonjs'
+		"target": "es5",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"sourceMap": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"removeComments": false,
+		"noImplicitAny": false
 	}))
 	.pipe(gulp.dest('./build/'));
 });

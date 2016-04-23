@@ -5,8 +5,8 @@ import materials = require('../materials');
 class LandscapeConfig{
 	heightMap: string = ''
 	blendMap: string = ''
-	width: number = 1000
-	length: number = 1000
+	width: number = 3000
+	length: number = 3000
 	widthSegments: number = 200
 	lengthSegments: number = 200
 	textures: string[]
