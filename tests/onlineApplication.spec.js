@@ -32,7 +32,7 @@ describe('Applications', function(){
 			expect(app.items.length).toBe(1);
 		});
 
-		fit('should remove object', function(){
+		it('should remove object', function(){
 			mockServer.emit('itemAdd', {_id: 1, name: 'testMesh', class: 'beril.BoxMesh'});
 			expect(app.items.length).toBe(1);
 			mockServer.emit('itemRemove', {_id: 1});

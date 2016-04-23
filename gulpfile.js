@@ -16,7 +16,7 @@ gulp.task('compilew', function(){
 
 gulp.task('karma', function (done) {
 	new Server({
-	    configFile:  __dirname + '/src/tests/karma.conf.js',
+	    configFile:  __dirname + '/tests/karma.conf.js',
 	    singleRun: false
 	  }, done).start();
 });

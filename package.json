@@ -36,6 +36,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "three": "^0.76.0",
     "lodash": "^4.0.0",
     "q": "^1.4.1"
   }

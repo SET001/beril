@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../../',
+    basePath: '../',
 
 
     // frameworks to use
@@ -15,14 +15,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
 	files: [
-        '../bower_components/lodash/lodash.js',
-        '../bower_components/three.js/build/three.js',
-        '../bower_components/q/q.js',
-        './node_modules/mock-socket/dist/mock-socket.min.js',
+        'node_modules/lodash/lodash.js',
+        'node_modules/three/three.js',
+        'node_modules/q/q.js',
+        'node_modules/mock-socket/dist/mock-socket.min.js',
 
         'build/beril.js',
-        'src/tests/mocks/berilMock.js',
-        'src/tests/**/[^_]*.spec.js',
+        'tests/mocks/berilMock.js',
+        'tests/**/[^_]*.spec.js',
         // 'src/tests/test-main.js',
         // 'build/tests/**/*.spec.js',
 	],
