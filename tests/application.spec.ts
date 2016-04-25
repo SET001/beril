@@ -1,4 +1,4 @@
-/// <reference path="definitions/_definitions.d.ts" />
+/// <reference path="definitions/definitions.d.ts" />
 
 
 import beril = require('../src/beril');
@@ -35,8 +35,8 @@ describe('application', () => {
 	 	};
 	 	beforeEach(function(){
 	 		spy = spyOn(foo, 'controller').and.callThrough();
- 			app1 = beril.application('foo', [beril.System]);
- 			app2 = beril.application('bar', []);
+ 			app1 = new beril.BasicApplication('foo', [beril.System]);
+ 			app2 = new beril.BasicApplication('bar', []);
  		});
 
 		it('should be created with incremental ID', () => {

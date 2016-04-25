@@ -20,8 +20,8 @@ module.exports = function(config) {
         {pattern: 'node_modules/q/q.js', included: false},
         {pattern: 'node_modules/mock-socket/dist/mock-socket.min.js', included: false},
 
-        //{pattern: 'tests/**/[^_]*.spec.js', included: false},
-        {pattern: 'tests/component.spec.js', included: false},
+        {pattern: 'tests/**/[^_]*.spec.js', included: false},
+        // {pattern: 'tests/component.spec.js', included: false},
         {pattern: 'src/**/[^_]*.js', included: false},
         // {pattern: 'src/beril.js', included: false},
         // {pattern: 'src/core.js', included: false},

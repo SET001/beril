@@ -2,5 +2,6 @@ build/
 bower_components/
 node_modules/
 src/**/*.js
+tests/**/*.spec.js
 *.sublime-workspace
 *.sublime-project

@@ -47,7 +47,6 @@ gulp.task('compose_shaders', function(){
 });
 
 gulp.task('compile_tests', function(){
-	console.log(tsConfig);
 	return gulp.src([
 		'tests/**/[^_]*.ts'
 	], { base: "." })
@@ -56,7 +55,6 @@ gulp.task('compile_tests', function(){
 });
 
 gulp.task('compile_sources', function(){
-	console.log(tsConfig);
 	return gulp.src([
 		'src/**/[^_]*.ts',
 	], { base: "." })

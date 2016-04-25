@@ -70,6 +70,8 @@ requirejs.onError = function (err) {
 };
 
 // have no idea why this shit work this way and don't work in normal way
+// normal way is then you load it somehow like this https://karma-runner.github.io/0.8/plus/RequireJS.html
+// or at least using this huck but without 3 nesting callbacks
 require(['three', 'q', 'lodash'], function(three, q){
   window.THREE = three;
   window.Q = q;
