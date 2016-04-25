@@ -3,26 +3,40 @@
 
 module.exports = function(config) {
   config.set({
-
+    browserNoActivityTimeout: 1000000,
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../',
 
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'requirejs'],
 
 
     // list of files / patterns to load in the browser
 	files: [
-        'node_modules/lodash/lodash.js',
-        'node_modules/three/three.js',
-        'node_modules/q/q.js',
-        'node_modules/mock-socket/dist/mock-socket.min.js',
+        {pattern: 'node_modules/lodash/lodash.js', included: false},
+        {pattern: 'node_modules/three/three.js', included: false},
+        {pattern: 'node_modules/q/q.js', included: false},
+        {pattern: 'node_modules/mock-socket/dist/mock-socket.min.js', included: false},
 
-        'build/beril.js',
-        'tests/mocks/berilMock.js',
-        'tests/**/[^_]*.spec.js',
+        //{pattern: 'tests/**/[^_]*.spec.js', included: false},
+        {pattern: 'tests/component.spec.js', included: false},
+        {pattern: 'src/**/[^_]*.js', included: false},
+        // {pattern: 'src/beril.js', included: false},
+        // {pattern: 'src/core.js', included: false},
+        // {pattern: 'src/application.js', included: false},
+        // {pattern: 'src/applications/*.js', included: false},
+        // {pattern: 'src/di.js', included: false},
+        // {pattern: 'src/entities.js', included: false},
+        // {pattern: 'src/entities/*.js', included: false},
+
+        'tests/test-main.js',
+        
+
+        // 'build/beril.js',
+        // 'tests/mocks/berilMock.js',
+        // 'tests/**/[^_]*.spec.js',
         // 'src/tests/test-main.js',
         // 'build/tests/**/*.spec.js',
 	],

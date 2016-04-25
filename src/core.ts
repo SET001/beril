@@ -5,7 +5,7 @@ var _componentId:number = 0;
 var _systemId:number = 0;
 var fooo: string;
 
-export var version: string = '0.1.3';
+export var version: string = '0.1.8888';
 
 export class Component{
 	id: number;
@@ -22,12 +22,12 @@ export class Component{
 	init(): Boolean {return true;}
 }
 
-export function reset(){
-	_applicationId = 0;
-	_componentId = 0;
-	_systemId = 0;
-	_applications = [];
-}
+// export function reset(){
+// 	_applicationId = 0;
+// 	_componentId = 0;
+// 	_systemId = 0;
+// 	_applications = [];
+// }
 
 export function newApplicationId(){
 	return _applicationId++;
@@ -280,14 +280,14 @@ export interface Application{
 
 import applications = require ('./application');
 
-export function application(name: string, systems?: Array< {new():System}>):Application{
-	var application: applications.BasicApplication;
-	if (systems){
-		application = new applications.BasicApplication(name, systems);
-		_applications.push(application);
-	} else {
-		application = <Application> _.find(_applications, { name: name });
-	}
-	return application;
+// export function application(name: string, systems?: Array< {new():System}>):Application{
+// 	var application: applications.BasicApplication;
+// 	if (systems){
+// 		application = new applications.BasicApplication(name, systems);
+// 		_applications.push(application);
+// 	} else {
+// 		application = <Application> _.find(_applications, { name: name });
+// 	}
+// 	return application;
 	
-}
+// }

@@ -12,8 +12,6 @@ export class MeshObject extends core.Entity{
 		components.TranslationComponent
 	];
 	
-	constructor() { super(); }
-
 	setUpComponents(){
 		super.setUpComponents();
 		var renderComponent = this.get('render');

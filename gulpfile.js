@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+var gulp = require('gulp');
 	ts = require('gulp-typescript'),
 	watch = require('gulp-watch'),
 	browserify = require('browserify'),
@@ -8,11 +8,8 @@ var gulp = require('gulp'),
 	gulpCopy = require('gulp-copy'),
 	del = require('del'),
 	shadersComposer = require('./shadersComposer'),
+	tsConfig = require('./tsconfig.json').compilerOptions,
 	Server = require('karma').Server;
-
-gulp.task('compilew', function(){
-	gulp.watch(['./src/**/[^_]*.ts'], ['compile']);
-});
 
 gulp.task('karma', function (done) {
 	new Server({
@@ -21,11 +18,11 @@ gulp.task('karma', function (done) {
 	  }, done).start();
 });
 
-gulp.task('browserify', ['clear', 'compose_shaders'], function(){
+gulp.task('browserify', function(done){
 	var b =  browserify({
-		entries: ['./src/engine/browserify.js', './src/engine/shaders/shaders.js']
+		entries: ['./src/browserify.js', './src/shaders/shaders.js']
 	});
-	return b.bundle()
+	b.bundle()
 		.on('error', function(err){
       console.log(err.message);
       console.log("ending stream...");
@@ -33,48 +30,51 @@ gulp.task('browserify', ['clear', 'compose_shaders'], function(){
     })
 		.pipe(source('beril.js'))
 		.pipe(gulp.dest('./build/'));
+	done();
 });
 
-gulp.task('clear', ['compile'], function (done) {
-  del([
-    '../site/beril.js',
-  ], {force: true});
-  done();
-});
+// gulp.task('clear', ['compile'], function (done) {
+//   del([
+//     '../site/beril.js',
+//   ], {force: true});
+//   done();
+// });
 
 gulp.task('compose_shaders', function(){
-	return gulp.src(['src/engine/shaders/**/[^_]*.glsl'])
+	return gulp.src(['src/shaders/**/[^_]*.glsl'])
 		.pipe(shadersComposer('shaders.js'))
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('compile', function(){
+gulp.task('compile_tests', function(){
+	console.log(tsConfig);
 	return gulp.src([
-		'src/**/[^_]*.ts'
-	])
-	.pipe(ts({
-		"target": "es5",
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"sourceMap": false,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"removeComments": false,
-		"noImplicitAny": false
-	}))
-	.pipe(gulp.dest('./build/'));
+		'tests/**/[^_]*.ts'
+	], { base: "." })
+		.pipe(ts(tsConfig))
+		.pipe(gulp.dest('.'));
 });
 
-
-gulp.task('copy', ['browserify'], function(){
-	gulp.src('build/beril.js')
-		.pipe(gulpCopy('../site/', {prefix:1}));
-	return gulp.src('build/beril.js')
-		.pipe(gulpCopy('../../avalon/vendors/beril/', {prefix:2}));
+gulp.task('compile_sources', function(){
+	console.log(tsConfig);
+	return gulp.src([
+		'src/**/[^_]*.ts',
+	], { base: "." })
+		.pipe(ts(tsConfig))
+		.pipe(gulp.dest('.'));
 });
 
-gulp.task('default', ['copy']);
+gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
 
-gulp.task('watch', function() {
-	gulp.watch(['./src/**/[^_]*.ts', './src/engine/shaders/**/*.glsl'], ['default']);
+// // gulp.task('copy', ['browserify'], function(){
+// // 	gulp.src('build/beril.js')
+// // 		.pipe(gulpCopy('../site/', {prefix:1}));
+// // 	return gulp.src('build/beril.js')
+// // 		.pipe(gulpCopy('../../avalon/vendors/beril/', {prefix:2}));
+// // });
+
+gulp.task('default', function() {
+	gulp.watch(['./src/shaders/**/*.glsl'], gulp.parallel(['compose_shaders', 'browserify']));
+	gulp.watch(['./src/**/[^_]*.ts'], gulp.series('compile_sources', 'browserify'));
+	gulp.watch(['./tests/**/[^_]*.ts'], gulp.series('compile_tests'));
 });

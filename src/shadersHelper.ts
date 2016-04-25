@@ -10,9 +10,9 @@ class ShadersHelper{
 
   _load(shader: string){
   	var path = this.path ? this.path + '/' + shader : shader;
-		var shaderName = shader.split('.');
-		if (shaderName.length) shaderName.pop();
-		shaderName = shaderName.join('.');
+		var _shaderName = shader.split('.');
+		if (_shaderName.length) _shaderName.pop();
+		var shaderName = _shaderName.join('.');
 		this.loader.load(path, (response) => {
 			console.log("===>", shaderName);
 			THREE.ShaderChunk[shaderName] = this.foo(response);

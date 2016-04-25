@@ -13,7 +13,7 @@
     "bower": "^1.7.1",
     "browserify": "^13.0.0",
     "del": "^2.2.0",
-    "gulp": "^3.9.1",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
     "gulp-copy": "0.0.2",
@@ -28,6 +28,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-requirejs": "^0.2.1",
     "karma-spec-reporter": "0.0.22",
+    "karma-typescript-preprocessor": "^0.1.2",
     "mock-socket": "^2.0.0",
     "phantomjs": "^1.9.19",
     "rename": "^1.0.3",
@@ -36,8 +37,9 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "three": "^0.76.0",
     "lodash": "^4.0.0",
-    "q": "^1.4.1"
+    "physijs-browserify": "0.0.2",
+    "q": "^1.4.1",
+    "three": "^0.76.0"
   }
 }
