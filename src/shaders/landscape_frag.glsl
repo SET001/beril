@@ -20,7 +20,7 @@ varying vec3 vLightFront;
 	varying vec3 vLightBack;
 
 #endif
-sadsd
+
 #include <common>
 #include <packing>
 #include <color_pars_fragment>

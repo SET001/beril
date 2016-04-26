@@ -26,28 +26,35 @@ export class InputSystem extends core.System{
 		D: 'moveRight',
 	};
 	pointerLockEnabled: boolean = false;
+	onEscape: Function;
+	container: any;
 	//deps = ['threeRender'];	//	dependencies
+
+	activate(){
+		this.container.requestPointerLock();
+		// if (!this.pointerLockEnabled){
+		// }else{
+
+		// }
+	}
 
 	init(){
 		var self = this;
 		_.find(this.application.systems, {type: 'render'}).initialized.promise.then((renderSystem) => {
-			var container = renderSystem.container;
+			this.container = renderSystem.container;
 			if (this.useMouse && 'pointerLockElement' in document){
-				container.onclick = function(){
-	    		if (!this.pointerLockEnabled){
-						container.requestPointerLock();
-	    		}else{
-
-	    		}
-	    	};
+				this.container.onclick = this.activate;
 	    	var listener = this.mouseMove.bind(this);
 	    	document.addEventListener('mousewheel', this.mouseWheel.bind(this));
 	    	document.addEventListener('pointerlockchange', () => {
-	    		this.pointerLockEnabled = (document.pointerLockElement == container);
+	    		this.pointerLockEnabled = (document.pointerLockElement == this.container);
 					if(this.pointerLockEnabled){
 						document.addEventListener("mousemove", listener, false);
 					}else{
 						document.removeEventListener("mousemove", listener, false);
+						if (this.onEscape){
+							this.onEscape();
+						}
 					};
 				}, false);
 			} else {

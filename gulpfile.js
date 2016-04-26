@@ -72,7 +72,7 @@ gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
 // // });
 
 gulp.task('default', function() {
-	gulp.watch(['./src/shaders/**/*.glsl'], gulp.parallel(['compose_shaders', 'browserify']));
-	gulp.watch(['./src/**/[^_]*.ts'], gulp.series('compile_sources', 'browserify'));
-	gulp.watch(['./tests/**/[^_]*.ts'], gulp.series('compile_tests'));
+	gulp.watch(['src/shaders/**/*.glsl'], gulp.parallel(['compose_shaders', 'browserify']));
+	gulp.watch(['src/**/[^_]*.ts'], gulp.series('compile_sources', 'browserify'));
+	gulp.watch(['tests/**/[^_]*.ts'], gulp.series('compile_tests'));
 });
