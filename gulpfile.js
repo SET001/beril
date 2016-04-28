@@ -92,8 +92,8 @@ gulp.task('semver', function (done) {
 
 gulp.task('release', gulp.series('semver', function(done){
 	var git = require('gulp-git');
-	git.commit('Updated version to ' + util.env.version);
-	git.push('origin');
+	// git.commit('Updated version to ' + util.env.version);
+	// git.push('origin', 'dev');
 	done();	
 }));
 
