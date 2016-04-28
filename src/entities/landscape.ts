@@ -43,8 +43,8 @@ export class Landscape extends core.Entity{
 			return Q.allSettled(foo);
 		} else {
 			var defer = Q.defer();
-			this.loader.load(param, function(response){
-				defer.resolve(response);
+			this.loader.load(param, function(texture: THREE.Texture){
+				defer.resolve(texture);
 			}, function(){
 
 			}, function(error){

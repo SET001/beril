@@ -55,12 +55,12 @@ export class ThreeRenderSystem extends core.System{
 		this.scene.remove(component.object);
 	}
 
-	loadScene(path){
-		var loader = new THREE.ObjectLoader();
-		var self = this;
-    loader.load(path, (scene) => {
-			self.scene.copy(scene);
-			self.setSize();
-    });
-	}
+	// loadScene(path){
+	// 	var loader = new THREE.ObjectLoader();
+	// 	var self = this;
+ //    loader.load(path, (scene) => {
+	// 		self.scene.copy(scene);
+	// 		self.setSize();
+ //    });
+	// }
 }

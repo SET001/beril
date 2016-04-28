@@ -14,7 +14,17 @@ class LandscapeConfig{
 	textures: string[]
 }
 
+interface PhysiLandscapeConfig{
+	heightMap: string;
+	blendMap: string;
+	textures: string[];
+}
+
 export class PhysiLandscape extends Landscape{
+
+	constructor(config: PhysiLandscapeConfig){
+		super();
+	}
 
 	setUpMesh(component){
 		var defer = Q.defer();

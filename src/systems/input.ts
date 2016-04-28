@@ -43,7 +43,7 @@ export class InputSystem extends core.System{
 		_.find(this.application.systems, {type: 'render'}).initialized.promise.then((renderSystem) => {
 			this.container = renderSystem.container;
 			if (this.useMouse && 'pointerLockElement' in document){
-				this.container.onclick = this.activate;
+				this.container.onclick = this.activate.bind(this);
 	    	var listener = this.mouseMove.bind(this);
 	    	document.addEventListener('mousewheel', this.mouseWheel.bind(this));
 	    	document.addEventListener('pointerlockchange', () => {
