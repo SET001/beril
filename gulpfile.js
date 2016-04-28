@@ -7,8 +7,10 @@ var gulp = require('gulp');
 	rename = require('gulp-rename'),
 	gulpCopy = require('gulp-copy'),
 	del = require('del'),
+	util = require('gulp-util'),
 	shadersComposer = require('./shadersComposer'),
 	tsConfig = require('./tsconfig.json').compilerOptions,
+	semver = require('semver'),
 	Server = require('karma').Server;
 
 gulp.task('karma', function (done) {
@@ -71,8 +73,32 @@ gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
 // // 		.pipe(gulpCopy('../../avalon/vendors/beril/', {prefix:2}));
 // // });
 
+gulp.task('semver', function (done) {
+	var type =  'patch';
+	if (util.env.major && util.env.minor ){
+
+	} else {
+		if (util.env.major) type = 'major';
+		if (util.env.minor) type = 'minor';
+	}
+	var fs = require('fs');
+	var packageConfig =  require('./package.json');
+	packageConfig.version = semver.inc(packageConfig.version, type);
+	var string = JSON.stringify(packageConfig, null, 2);
+	fs.writeFile('./package.json', string);
+	util.env.version = packageConfig.version;
+	done();
+});
+
+gulp.task('release', gulp.series('semver', function(done){
+	var git = require('gulp-git');
+	git.commit('Updated version to ' + util.env.version);
+	git.push('origin');
+	done();	
+}));
+
 gulp.task('default', function() {
-	gulp.watch(['src/shaders/**/*.glsl'], gulp.parallel(['compose_shaders', 'browserify']));
+	gulp.watch(['src/shaders/**/*.glsl'], gulp.series(['compose_shaders', 'browserify']));
 	gulp.watch(['src/**/[^_]*.ts'], gulp.series('compile_sources', 'browserify'));
 	gulp.watch(['tests/**/[^_]*.ts'], gulp.series('compile_tests'));
 });
