@@ -10,6 +10,7 @@ var gulp = require('gulp'),
 // 	done();	
 // }));
 
+gulp.task('optimize', require('./tasks/optimize')());
 gulp.task('test', require('./tasks/test')());
 gulp.task('compose_shaders', require('./tasks/shaders.js')(gulp));
 gulp.task('browserify', require('./tasks/browserify')(gulp));
