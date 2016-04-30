@@ -8,11 +8,12 @@ var errorHandler = function(error){
 module.exports = function(gulp){
 	return function(done){
 		gulp.src("./")
-			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}, errorHandler));
-		git.checkout('master', errorHandler);
-		git.merge('dev', errorHandler);
-		git.checkout('dev', errorHandler);
-		git.push('origin', 'master', errorHandler);
+			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}), errorHandler)
+			// .pipe(git.checkout('master'), errorHandler)
+			// .pipe(git.merge('dev'), errorHandler)
+			// .pipe(git.checkout('dev'), errorHandler)
+			// .pipe(git.push('origin', 'master'), errorHandler)
+			.on('error', errorHandler);
 		done();
 	}
 }
