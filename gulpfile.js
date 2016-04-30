@@ -13,7 +13,7 @@ gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
 gulp.task('build', gulp.series('compile_sources', 'shaders', 'pack'));
 gulp.task('semver', gulp.series(require('./tasks/semver')(), 'build'));
 
-gulp.task('release', gulp.series('semver', require('./tasks/release')(done)));
+gulp.task('release', gulp.series('semver', require('./tasks/release')(gulp)));
 
 gulp.task('default', function() {
 	gulp.watch(['src/shaders/**/*.glsl'], gulp.series(['shaders']));
