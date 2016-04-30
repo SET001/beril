@@ -11,6 +11,7 @@ module.exports = function(gulp){
 			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}, function(error){
 				if (error) errorHandler(error);
 				else {
+					console.log("Asd");
 					git.checkout('master', errorHandler);
 					git.merge('dev', errorHandler);
 					git.push('origin', 'master', errorHandler);
