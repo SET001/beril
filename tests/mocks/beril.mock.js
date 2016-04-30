@@ -1,5 +1,5 @@
-define(["require", "exports", '../../src/beril'], function (require, exports, beril) {
-    beril.BasicApplication.prototype.looper = function (avoidInfinte) {
+define(["require", "exports", '../../src/index'], function (require, exports, beril) {
+    beril.BasicApplication.prototype.looper = function () {
         this.animate();
     };
 });

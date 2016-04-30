@@ -1,9 +1,9 @@
-import beril = require('../beril');
+import core = require('../core');
 
 export class FPSPlayerController{
 	mouseAcceleration: number = 0.01;
 	moveSpeed: number = 5;
-	component: beril.Component;
+	component: core.Component;
 
 	mouseWheel(foo){
 		this.component.entity.get('camera').object.translateZ(foo.mouseWheel/Math.abs(foo.mouseWheel));

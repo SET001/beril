@@ -1,4 +1,4 @@
-define(["require", "exports", '../../src/beril'], function (require, exports, beril) {
+define(["require", "exports", '../../src/index'], function (require, exports, beril) {
     describe('Entities', function () {
         describe('MeshObject', function () {
             var meshObject;

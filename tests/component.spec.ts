@@ -1,5 +1,5 @@
 /// <reference path="definitions/definitions.d.ts" />
-import beril = require('../src/beril');
+import beril = require('../src/index');
 
 describe('Component', function(){
 	it('should be createad with incremented ID', function(){

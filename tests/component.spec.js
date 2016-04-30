@@ -1,4 +1,4 @@
-define(["require", "exports", '../src/beril'], function (require, exports, beril) {
+define(["require", "exports", '../src/index'], function (require, exports, beril) {
     describe('Component', function () {
         it('should be createad with incremented ID', function () {
             var component = new beril.Component();

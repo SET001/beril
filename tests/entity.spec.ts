@@ -1,5 +1,5 @@
 /// <reference path="definitions/definitions.d.ts" />
-import beril = require('../src/beril');
+import beril = require('../src/index');
 
 describe('Entity', function () {
 	var entity, component, pool;

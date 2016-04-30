@@ -1,6 +1,6 @@
 /// <reference path="definitions/definitions.d.ts" />
 
-import beril = require('../src/beril');
+import beril = require('../src/index');
 
 describe('Applications', function(){
 	describe('Basic Application', function() {
@@ -41,7 +41,7 @@ describe('Applications', function(){
 
 		it('should reset engine settings', function() {
 			beril.reset();
-			app3 = beril.application('test3', []);
+			app3 = new beril.BasicApplication('test3', []);
 			expect(app3.id).toBe(0);
 		});
 
