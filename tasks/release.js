@@ -8,7 +8,7 @@ var errorHandler = function(error){
 module.exports = function(gulp){
 	return function(done){
 		console.log("asd");
-		gulp.src("./.")
+		gulp.src("./")
 			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}, errorHandler));
 		console.log("asd");
 		// git.checkout('master', errorHandler);
