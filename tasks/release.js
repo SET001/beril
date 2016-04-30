@@ -8,16 +8,13 @@ var errorHandler = function(error){
 module.exports = function(gulp){
 	return function(done){
 		gulp.src("./")
-			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}, function(error){
-				if (error) errorHandler(error);
-				else {
-					console.log("Asd");
-					git.checkout('master', errorHandler);
-					git.merge('dev', errorHandler);
-					git.push('origin', 'master', errorHandler);
-					git.checkout('dev', errorHandler);
-				}
-			}));
+			.pipe(git.commit("Updated to version " + util.env.version, {args: "--all"}), errorHandler)
+			.on('end', function(){
+				console.log("asd");
+				git.checkout('master', errorHandler);
+				git.checkout('dev', errorHandler);
+				console.log("asd");
+			});
 		// git.checkout('master', errorHandler);
 		// git.merge('dev', errorHandler);
 		// git.checkout('dev', errorHandler);
