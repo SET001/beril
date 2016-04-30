@@ -23,10 +23,6 @@ module.exports = function(gulp){
 					}
 				});
 			});
-		// git.checkout('master', errorHandler);
-		// git.merge('dev', errorHandler);
-		// git.checkout('dev', errorHandler);
-		// 
 		done();
 	}
 }
