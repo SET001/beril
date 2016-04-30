@@ -75,7 +75,7 @@ requirejs.onError = function (err) {
 require(['three', 'q', 'lodash'], function(three, q){
   window.THREE = three;
   window.Q = q;
-  require(['../src/beril'], function(beril){
+  require(['../src/index'], function(beril){
     require(allTestFiles, function(){
       window.__karma__.start();
     });
