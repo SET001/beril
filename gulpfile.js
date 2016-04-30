@@ -11,7 +11,7 @@ gulp.task('compile_tests', require('./tasks/compile')(gulp, ['tests/**/[^_]*.ts'
 
 gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
 gulp.task('build', gulp.series('compile_sources', 'shaders', 'pack'));
-gulp.task('semver', gulp.series(require('./tasks/semver')(), 'build'));
+gulp.task('semver', gulp.series(require('./tasks/semver')()));
 
 gulp.task('release', gulp.series('semver', require('./tasks/release')(gulp)));
 
