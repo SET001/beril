@@ -2,7 +2,7 @@ var git = require('gulp-git');
 var util = require('gulp-util');
 
 var errorHandler = function(error){
-	console.error(error);
+	if (error) console.error(error);
 }
 
 module.exports = function(gulp){
