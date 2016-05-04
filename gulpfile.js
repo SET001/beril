@@ -21,6 +21,3 @@ gulp.task('watch', function() {
 	gulp.watch(['src/**/[^_]*.ts'], gulp.series('compile_sources'));
 	gulp.watch(['tests/**/[^_]*.ts'], gulp.series('compile_tests'));
 });
-
-
-// vinylPaths = require('vinyl-paths'),
