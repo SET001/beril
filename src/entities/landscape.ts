@@ -16,7 +16,7 @@ export class Landscape extends core.Entity{
 	config: LandscapeConfig = new LandscapeConfig()
 	loader: THREE.TextureLoader
 
-	constructor(config?: LandscapeConfig){
+	constructor(config?: any){
 		super();
 		if (config){
 			_.assign(this.config, config);

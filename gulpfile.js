@@ -10,13 +10,13 @@ gulp.task('compile_sources', require('./tasks/compile')(gulp, ['src/**/[^_]*.ts'
 gulp.task('compile_tests', require('./tasks/compile')(gulp, ['tests/**/[^_]*.ts']));
 
 gulp.task('compile_all', gulp.parallel('compile_sources', 'compile_tests'));
-gulp.task('build', gulp.series('compile_sources', 'shaders', 'pack'));
+gulp.task('build', gulp.series('compile_sources', 'shaders', 'browserify'));
 gulp.task('semver', gulp.series(require('./tasks/semver')()));
 
 gulp.task('blah', require('./tasks/release')(gulp));
 gulp.task('release', gulp.series('semver', 'blah'));
 
-gulp.task('default', function() {
+gulp.task('watch', function() {
 	gulp.watch(['src/shaders/**/*.glsl'], gulp.series(['shaders']));
 	gulp.watch(['src/**/[^_]*.ts'], gulp.series('compile_sources'));
 	gulp.watch(['tests/**/[^_]*.ts'], gulp.series('compile_tests'));

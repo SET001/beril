@@ -23,11 +23,12 @@ interface PhysiLandscapeConfig{
 export class PhysiLandscape extends Landscape{
 
 	constructor(config: PhysiLandscapeConfig){
-		super();
+		super(config);
 	}
 
 	setUpMesh(component){
 		var defer = Q.defer();
+		console.log(this.config);
 		this.load([
 			this.config.blendMap,
 			this.config.heightMap]
