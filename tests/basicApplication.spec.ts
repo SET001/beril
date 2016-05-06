@@ -1,21 +1,18 @@
 /// <reference path="definitions/definitions.d.ts" />
 
-import beril = require('../src/index');
+import beril = require('./mocks/beril.mock');
 
-describe('Applications', function(){
+fdescribe('Applications', function(){
 	describe('Basic Application', function() {
-		var app1,	app2,	app3, foo;
+		var app, sysInitSpy, appControllerSpy;
 
 		beforeEach(function(){
-			beril.reset();
-
-			foo = {
-		 		controller: function(){}
-		 	};
-			spyOn(foo, 'controller').and.callThrough();
+			sysInitSpy = spyOn(beril.System.prototype, 'init');
 		 	
-			app1 = new beril.BasicApplication('foo', [beril.System]);
-	 		app2 = new beril.BasicApplication('bar', []);
+			app = new beril.BasicApplication([beril.System]);
+			appControllerSpy = spyOn(app, 'controller');
+
+			app.run();
 		});
 
 		// it('should run', function(){
@@ -35,29 +32,23 @@ describe('Applications', function(){
 			// app1.foo();	// test for beril mock
 		});
 
-		it('should be created with incremental ID', function() {
-			expect(app1.id).not.toEqual(app2.id);
-		});
-
-		it('should reset engine settings', function() {
-			beril.reset();
-			app3 = new beril.BasicApplication('test3', []);
-			expect(app3.id).toBe(0);
-		});
-
 		// it('should work as application getter', function(){
 		// 	var application = beril.application('foo');
 		// 	expect(application.id).toEqual(app1.id);
 		// });
 
 		it('should init systems', function(){
-			var system = _.find(app1.systems, {type: 'basic'});
+			var system = _.find(app.systems, {type: 'basic'});
 			expect(system).toBeDefined();
+			expect(sysInitSpy).toHaveBeenCalled();
 		});
 
 		it('should run controller', function(){
-			app2.run(foo.controller);
-			expect(foo.controller).toHaveBeenCalled();
+			expect(appControllerSpy).toHaveBeenCalled();
 		});
+		// it('should run controller', function(){
+		// 	app2.run(foo.controller);
+		// 	expect(foo.controller).toHaveBeenCalled();
+		// });
 	});
 });

@@ -2,4 +2,5 @@ define(["require", "exports", '../../src/index'], function (require, exports, be
     beril.BasicApplication.prototype.looper = function () {
         this.animate();
     };
+    return beril;
 });

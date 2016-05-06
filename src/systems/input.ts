@@ -25,13 +25,10 @@ export class InputSystem extends core.System{
 		A: 'moveLeft',
 		D: 'moveRight',
 	};
-	pointerLockEnabled: boolean = false;
 	onEscape: Function;
-	container: any;
-	//deps = ['threeRender'];	//	dependencies
 
 	activate(){
-		this.container.requestPointerLock();
+		this.application.container.requestPointerLock();
 		// if (!this.pointerLockEnabled){
 		// }else{
 
@@ -40,61 +37,55 @@ export class InputSystem extends core.System{
 
 	init(){
 		var self = this;
-		_.find(this.application.systems, {type: 'render'}).initialized.promise.then((renderSystem) => {
-			this.container = renderSystem.container;
-			if (this.useMouse && 'pointerLockElement' in document){
-				this.container.onclick = this.activate.bind(this);
-	    	var listener = this.mouseMove.bind(this);
-	    	document.addEventListener('mousewheel', this.mouseWheel.bind(this));
-	    	document.addEventListener('pointerlockchange', () => {
-	    		this.pointerLockEnabled = (document.pointerLockElement == this.container);
-					if(this.pointerLockEnabled){
-						document.addEventListener("mousemove", listener, false);
-					}else{
-						document.removeEventListener("mousemove", listener, false);
-						if (this.onEscape){
-							this.onEscape();
-						}
-					};
-				}, false);
-			} else {
-				console.log("no mouse controlls");
-			}
+		if (this.useMouse && 'pointerLockElement' in document){
+			this.application.container.onclick = this.activate.bind(this);
+    	var listener = this.mouseMove.bind(this);
+    	document.addEventListener('mousewheel', this.mouseWheel.bind(this));
+    	document.addEventListener('pointerlockchange', () => {
+    		this.application.active = (document.pointerLockElement == this.application.container);
+				if(this.application.active){
+					document.addEventListener("mousemove", listener, false);
+				}else{
+					document.removeEventListener("mousemove", listener, false);
+				};
+			}, false);
+		} else {
+			console.log("no mouse controlls");
+		}
 
-			if (this.useKeyboard){
-				document.onkeydown = function(e){
-					var action = null;
-					if (e.which in self.keyMapping){
-						action = self.keyMapping[e.which];
-					} else {
-						if (String.fromCharCode(e.which) in self.keyMapping){
-							action = self.keyMapping[String.fromCharCode(e.which)];
-						}
-						else{
-							action = String.fromCharCode(e.which);
-						}
+		if (this.useKeyboard){
+			document.onkeydown = function(e){
+				var action = null;
+				if (e.which in self.keyMapping){
+					action = self.keyMapping[e.which];
+				} else {
+					if (String.fromCharCode(e.which) in self.keyMapping){
+						action = self.keyMapping[String.fromCharCode(e.which)];
 					}
-					self.actions[action] = true;
+					else{
+						action = String.fromCharCode(e.which);
+					}
 				}
-				document.onkeyup = function(e){
-					var action = null;
-					if (e.which in self.keyMapping){
-						action = self.keyMapping[e.which]
+				self.actions[action] = true;
+			}
+			document.onkeyup = function(e){
+				var action = null;
+				if (e.which in self.keyMapping){
+					action = self.keyMapping[e.which]
+				}
+				else {
+					if (String.fromCharCode(e.which) in self.keyMapping){
+						action = self.keyMapping[String.fromCharCode(e.which)];	
 					}
 					else {
-						if (String.fromCharCode(e.which) in self.keyMapping){
-							action = self.keyMapping[String.fromCharCode(e.which)];	
-						}
-						else {
-							action = String.fromCharCode(e.which);
-						}
+						action = String.fromCharCode(e.which);
 					}
-					if (action)
-						self.actions[action] = false;
 				}
+				if (action)
+					self.actions[action] = false;
 			}
-		});
-		this.initialized.resolve(this);
+		}
+		return true;
 	}
 
 	controller(component: components.InputComponent){

@@ -11,7 +11,7 @@ export class StatsSystem extends core.System{
 		this.stats.domElement.style.right = '0px';
 		this.stats.domElement.style.top = '0px';
 		document.getElementById('container').appendChild(this.stats.domElement);
-		this.initialized.resolve();
+		return true;
 	}
 	
 	run(){

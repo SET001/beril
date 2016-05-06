@@ -11,33 +11,38 @@ class ServerConnector{
 	onItemUpdate: Function;	// for chunk updates
 	onNotice: Function;				// for anything else
 	onConnect: Function;
+	socket: any;
 	connect(settings):Q.Promise<any>{
 		var defer = Q.defer();
-		var query = '';
-		if (settings.login && settings.password){
-			query = `login=${settings.login}&password=${settings.password}`;
-		}
-		socket
-		var socket = io.connect(`http://${settings.host}:${settings.port}`, {query: query});
 
-		socket.on('connect', () => {
+		this.socket = io.connect(`http://${settings.host}:${settings.port}`);
+
+		this.socket.on('connect', () => {
 			this.isConnected = true;
 			defer.resolve();
 			if (this.onConnect) this.onConnect();
 		});
 		
-		socket.on('itemAdd', (item) => {
+		this.socket.on('itemAdd', (item) => {
 			if (this.onItemAdd) this.onItemAdd(item);
 		});
 
-		socket.on('itemUpdate', (item) => {
+		this.socket.on('itemUpdate', (item) => {
 			if (this.onItemUpdate) this.onItemUpdate(item);
 		});
 
-		socket.on('itemRemove', (item) => {
+		this.socket.on('itemRemove', (item) => {
 			if (this.onItemRemove) this.onItemRemove(item);
 		});
 		return defer.promise;
+	}
+
+	register(user){
+		this.socket.emit('register', {login: user.login, password: user.password});
+	}
+
+	login(){
+
 	}
 }
 
@@ -58,21 +63,23 @@ export class OnlineApplication extends BasicApplication{
 	server: ServerConnector = new ServerConnector();
 
 
-	constructor(public name: string, systems?: Array< {new():core.System} >, config?: OnlineAppDefaults){
-		super(name, systems);
+	constructor(systems?: Array< {new():core.System} >, config?: OnlineAppDefaults){
+		super(systems);
 		_.assign(this.settings, config, this.defaults);
 		
 	}
 
-	_run(controller?: Function){
-		this.setPawn();
-		this.connect();
-		if (controller){
-			injector.resolve(controller, this)();
-		}
-		this.looper();
-		// window.requestAnimationFrame(this.looper.bind(this));
-	}
+	// _run(controller?: Function){
+	// 	this.setPawn();
+	// 	this.running = true;
+	// 	this.connect().then(() => {
+	// 		if (controller){
+	// 			injector.resolve(controller, this)();
+	// 		}
+	// 		this.looper();
+	// 	});
+	// 	// window.requestAnimationFrame(this.looper.bind(this));
+	// }
 
 	connect(){
 		this.server.onPlayerUpdate = (update) => {

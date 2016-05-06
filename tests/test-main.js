@@ -15,7 +15,7 @@ require.config({
   // Karma serves files under /base, which is the basePath from your config file
   baseUrl: '/base/tests',
   // deps: ['three', 'tests/component.spec'],
-  //deps: allTestFiles,
+  // deps: allTestFiles,
   // deps: allTestFiles,
   // deps: ['../node_modules/three/three', '../src/beril', 'component.spec'],
 
@@ -75,9 +75,14 @@ requirejs.onError = function (err) {
 require(['three', 'q', 'lodash'], function(three, q){
   window.THREE = three;
   window.Q = q;
-  require(['../src/index'], function(beril){
-    require(allTestFiles, function(){
-      window.__karma__.start();
-    });
-  })
+  require(allTestFiles, function(){
+    window.__karma__.start();
+  });
+
+  // require(['../src/index'], function(beril){
+  //   console.log("asd", beril.version);
+    
+  //   //   window.__karma__.start();
+  //   // });
+  // })
 });

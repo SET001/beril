@@ -4,14 +4,12 @@ import injector = require('../di');
 import systems = require('../systems');
 import entities = require('../entities');
 
-export class BasicApplication implements core.Application{
-	id: number = core.newApplicationId();
+export class BasicApplication{
 	defaults: core.AppDefaults  = {
 		pawn: entities.Player,
 		scene: 'scene1'
 	};
 	settings: core.AppDefaults;
-	controller: Function;
 	pool: core.Pool = new core.Pool();
 	systems: core.System[] = [];
 	_entities: Array<core.Entity> = [];
@@ -19,9 +17,12 @@ export class BasicApplication implements core.Application{
 	scenes: any[];
 	initializers: Q.Promise<any>[] = [];
 	controllers: any[] = [];
+	running: boolean = false;
+	active: boolean = false;	//	is user controls active
 	items: any[] = [];
+	container: HTMLElement = document.body;
 
-	constructor(public name: string, systems?: Array< {new():core.System} >, config?: core.AppDefaults){
+	constructor(systems?: Array< {new():core.System} >, config?: core.AppDefaults){
 		this.settings = this.defaults;
 		_.assign(this.settings, config);
 		for (var i in systems){
@@ -30,6 +31,8 @@ export class BasicApplication implements core.Application{
 			this.systems.push(system);
 		}
 	}
+
+	controller(){}
 
 	setPawn(){
 		this.pawn = new this.settings.pawn();
@@ -45,36 +48,37 @@ export class BasicApplication implements core.Application{
 		this.addObject(this.pawn);
 	}
 
-	_run(controller?: Function){
-		this.setPawn();
-		if (controller){
-			injector.resolve(controller, this)();
-		}
-		this.looper();
-		// window.requestAnimationFrame(this.looper.bind(this));
-	}
+	// _run(controller?: Function){
+	// 	this.setPawn();
+	// 	if (controller){
+	// 		injector.resolve(controller, this)();
+	// 	}
+	// 	this.running = true;
+	// 	this.looper();
+	// 	// window.requestAnimationFrame(this.looper.bind(this));
+	// }
 
 	run(controller?: Function){
 		this.initSystems();
-		if (this.initializers.length){
-			Q.all(this.initializers).then(() => {
-				this._run(controller);
-			}).fail(function(error){
-				console.error(error);
-			})
-		} else {
-			this._run(controller);
+		this.setPawn();
+		this.controller();
+		if (controller){
+			injector.resolve(controller, this)();
 		}
+		this.running = true;
+		this.looper();
 		return this;
 	}
 
 	initSystems(){
 		for (var i in this.systems){
 			var system = this.systems[i];
-			// var init = injector.resolve(system.init, system);
-			// init();
 			system.init();
-			this.initializers.push(system.initialized.promise);
+			var setUpFunction = 'setUp'+system.type.charAt(0).toUpperCase() + system.type.slice(1);
+			if (this[setUpFunction]){
+				this[setUpFunction](system);
+			}
+
 			system.subscribeToPool(this.pool);
 		}
 	}

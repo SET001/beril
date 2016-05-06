@@ -1,9 +1,5 @@
-export var _applications: Array<Application> = [];
-
-var _applicationId:number = 0;
 var _componentId:number = 0;
 var _systemId:number = 0;
-var fooo: string;
 
 export class Component{
 	id: number;
@@ -21,14 +17,8 @@ export class Component{
 }
 
 export function reset(){
-	_applicationId = 0;
 	_componentId = 0;
 	_systemId = 0;
-	_applications = [];
-}
-
-export function newApplicationId(){
-	return _applicationId++;
 }
 
 export function newSystemId(){
@@ -39,16 +29,17 @@ export function newComponentId(){
 	return _systemId++;
 }
 
+import applications = require ('./application');
+
 export class System{
 	pool: Pool;
-	application: Application;
+	application: applications.BasicApplication;
 	initialized: Q.Deferred<any>;
 	type: string = 'basic';
 	// deps: {new(): System}[];
 
-	constructor(){
-		this.initialized = Q.defer();
-	}
+	constructor(){}
+
 	controller(component: Component){}
 
 	onComponentAdded(component: Component){}
@@ -73,8 +64,9 @@ export class System{
 
 	}
 
-	init(systems?: any){
-		this.initialized.resolve();
+	init(){
+		console.log("init");
+		return true;
 	}
 }
 
@@ -242,50 +234,3 @@ export interface AppDefaults{
 	pawn: {new():Entity};
 	scene: string;
 }
-
-export interface Application{
-	id: number;
-	name: string;
-	defaults: AppDefaults;
-	settings: AppDefaults;
-	controller: Function;
-
-	pool: Pool;
-	systems: System[];
-	_entities: Array<Entity>;
-	pawn: Entity;
-	scenes: any[];
-	initializers: Q.Promise<any>[];
-	controllers: any[];
-	items: any[];
-
-	setPawn()
-	_run(controller?: Function)
-	run(controller?: Function)
-	appConfig(callback: Function)
-	sysConfig(systemType: string, configCallback: Function)
-	initSystems()
-	config(a: string|Function, b?: Function)
-	animate()
-	looper()
-	entity(name: string, components: Array<{new():Component}>, constructor: Function)
-	system(name: string, system: {new(): System}): Application
-	addSystem(system: System)
-	getSystem(type: string)
-	addObject(object: Entity)
-	removeObject(object: Entity)
-}
-
-import applications = require ('./application');
-
-// export function application(name: string, systems?: Array< {new():System}>):Application{
-// 	var application: applications.BasicApplication;
-// 	if (systems){
-// 		application = new applications.BasicApplication(name, systems);
-// 		_applications.push(application);
-// 	} else {
-// 		application = <Application> _.find(_applications, { name: name });
-// 	}
-// 	return application;
-	
-// }
